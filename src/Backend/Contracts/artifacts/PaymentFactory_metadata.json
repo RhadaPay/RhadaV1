@@ -4,7 +4,205 @@
 	},
 	"language": "Solidity",
 	"output": {
-		"abi": [],
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "applicant",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "ApplicantApplied",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "applicant",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "ApplicantChosen",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "applicant",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "FinalSign",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "JobCompleted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "downPayment",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "incrementPay",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "JobCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "applicant",
+						"type": "address"
+					}
+				],
+				"name": "JobSigned",
+				"type": "event"
+			},
+			{
+				"inputs": [],
+				"name": "applyForJob",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "chooseApplicant",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "configureJob",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_downPayment",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_incrementPay",
+						"type": "uint256"
+					}
+				],
+				"name": "createJob",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "finalSign",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "initSign",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [],
+				"name": "submitWork",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
 		"devdoc": {
 			"kind": "dev",
 			"methods": {},
@@ -33,11 +231,11 @@
 	},
 	"sources": {
 		"src/Backend/Contracts/PaymentFactory.sol": {
-			"keccak256": "0xe5475f01b2424527ff93503c8aba51d75bf462dbae27f598b269bc3fc09d159c",
+			"keccak256": "0x4ea63e60b9d839b6bb42635ec7c6494cb62d0b14fbdfc3c6d6f276a8e1309cd2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ee21041cd726000b0ecc9de54cb01a2da5739cced1818b2cc9103ba1d6ae0a2c",
-				"dweb:/ipfs/QmfEFAPeZzrw7WKZGStsTKsDoECqAMDSyboC5sU4metzJX"
+				"bzz-raw://7264dd8d699fdf8577ed7615b872432d5ff773b59b207f352ef2b57ec5a9a20c",
+				"dweb:/ipfs/QmWCSeRHXMa5A7cMcj4GWgxXSg9zPRFYX3DYKNaSJ2PcE6"
 			]
 		}
 	},
