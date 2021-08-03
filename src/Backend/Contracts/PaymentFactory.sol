@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
 
-import "https://github.com/OpenZeppelin/openzeppelin-contracts/contracts/token/ERC721/ERC721.sol";
-
 pragma solidity ^0.8.0;
 
 /** TO DO:
  * Check states
  * Check the logic behind withdrawing funds after certain amount of time
- * Implement "loan" idea
+ * Implement "loan" idea. Also flesh out and discuss it more. Implement a function where creator can only increase his holdings
+ *              Hard to do w/o someone (the seller) being punished
  * Implement the streampay
  * Clean up code + comments
  * Fix the stake ether function. Remove and put elsewhere
@@ -61,15 +60,6 @@ contract PaymentFactory {
     // Modifiers
     
     /**
-     * @notice Confirms whether the address is the creator of the given job
-     * @dev Can probably remove this one and just merge it with auth for more flexibility
-     **/
-    modifier isCreator(address src, uint jobID) {
-        require(src == jobs[jobID].creator);
-        _;
-    }
-    
-    /**
      * @notice Confirms if the sender is the right address
      **/ 
     modifier auth(address src) {
@@ -103,7 +93,7 @@ contract PaymentFactory {
      * @notice Ether is staked by the creator for the job.
      * @dev This function is most likely not logically written. Staking should be done inside the signing method
      **/ 
-    function stakeEther(uint jobID) public payable isCreator(msg.sender, jobID) {
+    function stakeEther(uint jobID) public payable auth(jobs[jobID].creator) {
         require(msg.value >= jobs[jobID].downPayment);
     }
     
@@ -116,7 +106,7 @@ contract PaymentFactory {
      * @param _incrementPay The initial increment per event (more on this... probably an oracle is the right way to go about this param. Could also standardize it)
      * @param _timeBeforeStakeRemoved The time before the job creator can remove his stake after the job is submitted
      **/ 
-    function createJob(uint _downPayment, uint _incrementPay, uint _timeBeforeStakeRemoved) public payable {
+    function createJob(uint _downPayment, uint _incrementPay, uint _timeBeforeStakeRemoved) public {
         jobs.push(Job({
             creator: msg.sender,
             downPayment: _downPayment,
@@ -136,9 +126,18 @@ contract PaymentFactory {
      * @param newDownPayment The new down payment
      * @param jobID The ID of a specific job
      **/ 
-    function configureJobDownPayment(uint newDownPayment, uint jobID) public isCreator(msg.sender, jobID) isState(State.Open, jobID) {
+    function configureJobDownPayment(uint newDownPayment, uint jobID) public auth(jobs[jobID].creator) isState(State.Open, jobID) {
+        require(newDownPayment > 0);
         jobs[jobID].downPayment = newDownPayment;
-        
+        // Emit events
+    }
+    
+    function configureJobIncrementPay(uint newIncrement, uint jobID) public auth(jobs[jobID].creator) isState(State.Open, jobID) {
+        require(newIncrement > 0);
+    }
+    
+    function configureJobTimeBeforeStakeRemoved(uint newTimeBeforeCanRemove, uint jobID) public auth(jobs[jobID].creator) isState(State.Open, jobID) {
+        require(newTimeBeforeCanRemove > 0);
     }
     
     /**
@@ -158,7 +157,7 @@ contract PaymentFactory {
      * @param chosenApplicant The applicant who is accepted
      * @param jobID The ID of a specific job
      **/ 
-    function chooseApplicant(address chosenApplicant, uint jobID) public isCreator(msg.sender, jobID) {
+    function chooseApplicant(address chosenApplicant, uint jobID) public auth(jobs[jobID].creator) {
         finalApplicant[jobID] = chosenApplicant;
     }
     
@@ -176,7 +175,7 @@ contract PaymentFactory {
      * @dev Check the states
      * @param jobID The ID of a specific job
      **/ 
-    function initCreatorSign(uint jobID) public isCreator(msg.sender, jobID) {
+    function initCreatorSign(uint jobID) public auth(jobs[jobID].creator) {
         
     }
     
@@ -196,7 +195,7 @@ contract PaymentFactory {
      * @dev Refusals and states
      * @param jobID The ID of a specific job
      **/
-    function finalSign(uint jobID) public isCreator(msg.sender, jobID) isState(State.Completed, jobID) {
+    function finalSign(uint jobID) public auth(jobs[jobID].creator) isState(State.Completed, jobID) {
         
     }
     
@@ -205,10 +204,12 @@ contract PaymentFactory {
      * @dev Need to discuss this idea more. Worker should be guaranteed some pay + extra as an investment
      * @param jobID The ID of a specific job
      **/ 
-    function removeStake(uint jobID) public payable isCreator(msg.sender, jobID) {
+    function removeStake(uint jobID) public payable auth(jobs[jobID].creator) {
         if(block.timestamp > jobs[jobID].timeBeforeStakeRemoved) {
             // Need to make sure stream cancels
             // Also need to implement remaining funds tracker
+            // Need require statement for above rather than an if
+            // Need a require statement to see if has the correct amount
             (payable(jobs[jobID].creator)).transfer(jobs[jobID].downPayment);
             emit StakeRemoved(msg.sender, jobs[jobID].downPayment, jobID);
         }
