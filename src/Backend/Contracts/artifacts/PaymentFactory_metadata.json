@@ -227,7 +227,7 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "_downPayment",
+						"name": "newDownPayment",
 						"type": "uint256"
 					},
 					{
@@ -265,15 +265,40 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
 				"name": "finalSign",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
 				"name": "initApplicantSign",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "initCreatorSign",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -305,7 +330,13 @@
 				"type": "function"
 			},
 			{
-				"inputs": [],
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
 				"name": "submitWork",
 				"outputs": [],
 				"stateMutability": "nonpayable",
@@ -315,11 +346,66 @@
 		"devdoc": {
 			"kind": "dev",
 			"methods": {
+				"applyForJob(uint256)": {
+					"details": "Can flesh out a little bit more, but this is probably ok for now",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
+				},
+				"chooseApplicant(address,uint256)": {
+					"details": "Need to flesh out a little... Give applicant the choice to still choose the job before money is staked (do in signing process)For the above, make sure the states are worked out",
+					"params": {
+						"chosenApplicant": "The applicant who is accepted",
+						"jobID": "The ID of a specific job*"
+					}
+				},
 				"configureJobDownPayment(uint256,uint256)": {
-					"details": "downpayment will be confirmed during the signing process*"
+					"details": "downpayment will be confirmed during the signing process",
+					"params": {
+						"jobID": "The ID of a specific job*",
+						"newDownPayment": "The new down payment"
+					}
+				},
+				"createJob(uint256,uint256,uint256)": {
+					"details": "Some variables may be unneeded, such as the creator signing varlook into incrementPayLook into timeBeforeStakeRemoved",
+					"params": {
+						"_downPayment": "The initial downpayment that is staked by the job creator",
+						"_incrementPay": "The initial increment per event (more on this... probably an oracle is the right way to go about this param. Could also standardize it)",
+						"_timeBeforeStakeRemoved": "The time before the job creator can remove his stake after the job is submitted*"
+					}
+				},
+				"finalSign(uint256)": {
+					"details": "Refusals and states",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
+				},
+				"initApplicantSign(uint256)": {
+					"details": "Make sure states make sense. Add a function to withdraw",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
+				},
+				"initCreatorSign(uint256)": {
+					"details": "Check the states",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
+				},
+				"removeStake(uint256)": {
+					"details": "Need to discuss this idea more. Worker should be guaranteed some pay + extra as an investment",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
 				},
 				"stakeEther(uint256)": {
 					"details": "This function is most likely not logically written. Staking should be done inside the signing method*"
+				},
+				"submitWork(uint256)": {
+					"details": "Check states. Probably need a bool for simple storage. Should emphasize       communicating with the job creator before submissionImplement states and refusals",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
 				}
 			},
 			"version": 1
@@ -327,10 +413,38 @@
 		"userdoc": {
 			"kind": "user",
 			"methods": {
+				"applyForJob(uint256)": {
+					"notice": "Applicants apply for a specific job"
+				},
+				"chooseApplicant(address,uint256)": {
+					"notice": "The job creator can choose an applicant for his job"
+				},
+				"configureJobDownPayment(uint256,uint256)": {
+					"notice": "The job creator can configure the down payment before finalizing his choice of applicant"
+				},
+				"createJob(uint256,uint256,uint256)": {
+					"notice": "A new job is created with the terms set by the job creator"
+				},
+				"finalSign(uint256)": {
+					"notice": "The job creators final sign off. Signals event tracking and the payment stream"
+				},
+				"initApplicantSign(uint256)": {
+					"notice": "The applicant signs off and agrees to do a job. The applicant can still withdraw from the commitment before the creator also signs off"
+				},
+				"initCreatorSign(uint256)": {
+					"notice": "The creator officially signs off and the job process starts"
+				},
+				"removeStake(uint256)": {
+					"notice": "The job creator can remove his stake after the allotted time"
+				},
 				"stakeEther(uint256)": {
 					"notice": "Ether is staked by the creator for the job."
+				},
+				"submitWork(uint256)": {
+					"notice": "Signals that work is submitted. Acts as the applicant signing"
 				}
 			},
+			"notice": "TO DO: Check states Check the logic behind withdrawing funds after certain amount of time Implement \"loan\" idea Implement the streampay Clean up code + comments Fix the stake ether function. Remove and put elsewhere Put more withdrawal functions in case Add a stake for the worker to make up for gas fees if bails on job? Does this act as more of a deterrent though? Begin testing*",
 			"version": 1
 		}
 	},
@@ -423,11 +537,11 @@
 			]
 		},
 		"src/Backend/Contracts/PaymentFactory.sol": {
-			"keccak256": "0x3a376fd9c7dbeb598c3fc4bcb8d33be18172726c4b2d725d5d60278b4d4498d6",
+			"keccak256": "0xc00e28874b1a371dfa84d4307298faebb257bd4e05566e9cdfb05eb9824347f2",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://b3e93b5d9bf1dbc22215c2cf4b44d2c3a12ad3a5044683e155820c4085a05291",
-				"dweb:/ipfs/Qme1NB6SMCh7SB2VekmBTFJSxc2mC8PyokWgmy6rV75UW8"
+				"bzz-raw://f44a862005b4403c9a702b0183c887c26c3c3290c4c9f51a13609a6424f9bed7",
+				"dweb:/ipfs/QmaL6GPVAY8eZeUieNS1L2Nbxk7SAg3zJ5qTQk3ia6rzHp"
 			]
 		}
 	},
