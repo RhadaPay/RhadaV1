@@ -399,6 +399,7 @@ contract RedirectAll is SuperAppBase {
         bytes calldata, //_cbdata,
         bytes calldata _ctx
     ) external override onlyHost returns (bytes memory newCtx) {
+        //TODO: handle contract termination
         // According to the app basic law, we should never revert in a termination callback
         if (!_isSameToken(_superToken) || !_isCFAv1(_agreementClass))
             return _ctx;

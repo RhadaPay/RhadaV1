@@ -238,21 +238,21 @@
     "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
     "exportedSymbols": {
       "ERC20WithTokenInfo": [
-        6393
+        6421
       ],
       "IERC20": [
-        1722
+        1750
       ],
       "TokenInfo": [
-        6415
+        6443
       ]
     },
-    "id": 6394,
+    "id": 6422,
     "license": "AGPLv3",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 6383,
+        "id": 6411,
         "literals": [
           "solidity",
           ">=",
@@ -265,15 +265,15 @@
       {
         "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
         "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-        "id": 6385,
+        "id": 6413,
         "nodeType": "ImportDirective",
-        "scope": 6394,
-        "sourceUnit": 1723,
+        "scope": 6422,
+        "sourceUnit": 1751,
         "src": "62:72:29",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 6384,
+              "id": 6412,
               "name": "IERC20",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -287,15 +287,15 @@
       {
         "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
         "file": "./TokenInfo.sol",
-        "id": 6387,
+        "id": 6415,
         "nodeType": "ImportDirective",
-        "scope": 6394,
-        "sourceUnit": 6416,
+        "scope": 6422,
+        "sourceUnit": 6444,
         "src": "135:44:29",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 6386,
+              "id": 6414,
               "name": "TokenInfo",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -311,59 +311,59 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 6389,
+              "id": 6417,
               "name": "IERC20",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1722,
+              "referencedDeclaration": 1750,
               "src": "513:6:29",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_IERC20_$1722",
+                "typeIdentifier": "t_contract$_IERC20_$1750",
                 "typeString": "contract IERC20"
               }
             },
-            "id": 6390,
+            "id": 6418,
             "nodeType": "InheritanceSpecifier",
             "src": "513:6:29"
           },
           {
             "baseName": {
-              "id": 6391,
+              "id": 6419,
               "name": "TokenInfo",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 6415,
+              "referencedDeclaration": 6443,
               "src": "521:9:29",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_TokenInfo_$6415",
+                "typeIdentifier": "t_contract$_TokenInfo_$6443",
                 "typeString": "contract TokenInfo"
               }
             },
-            "id": 6392,
+            "id": 6420,
             "nodeType": "InheritanceSpecifier",
             "src": "521:9:29"
           }
         ],
         "contractDependencies": [
-          1722,
-          6415
+          1750,
+          6443
         ],
         "contractKind": "contract",
         "documentation": {
-          "id": 6388,
+          "id": 6416,
           "nodeType": "StructuredDocumentation",
           "src": "182:245:29",
           "text": " @dev Interface for ERC20 token with token info\n NOTE: Using abstract contract instead of interfaces because old solidity\n does not support interface inheriting other interfaces\n solhint-disable-next-line no-empty-blocks"
         },
         "fullyImplemented": false,
-        "id": 6393,
+        "id": 6421,
         "linearizedBaseContracts": [
-          6393,
-          6415,
-          1722
+          6421,
+          6443,
+          1750
         ],
         "name": "ERC20WithTokenInfo",
         "nodeType": "ContractDefinition",
         "nodes": [],
-        "scope": 6394,
+        "scope": 6422,
         "src": "473:60:29"
       }
     ],
@@ -374,13 +374,13 @@
       "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
       "exportedSymbols": {
         "ERC20WithTokenInfo": [
-          6393
+          6421
         ],
         "IERC20": [
-          1722
+          1750
         ],
         "TokenInfo": [
-          6415
+          6443
         ]
       },
       "license": "AGPLv3"
@@ -395,16 +395,16 @@
             ".0"
           ]
         },
-        "id": 6383,
+        "id": 6411,
         "name": "PragmaDirective",
         "src": "35:25:29"
       },
       {
         "attributes": {
-          "SourceUnit": 1723,
+          "SourceUnit": 1751,
           "absolutePath": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
           "file": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
-          "scope": 6394,
+          "scope": 6422,
           "symbolAliases": [
             {
               "foreign": {
@@ -414,7 +414,7 @@
                   ],
                   "value": "IERC20"
                 },
-                "id": 6384,
+                "id": 6412,
                 "name": "Identifier",
                 "src": "71:6:29"
               }
@@ -422,16 +422,16 @@
           ],
           "unitAlias": ""
         },
-        "id": 6385,
+        "id": 6413,
         "name": "ImportDirective",
         "src": "62:72:29"
       },
       {
         "attributes": {
-          "SourceUnit": 6416,
+          "SourceUnit": 6444,
           "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
           "file": "./TokenInfo.sol",
-          "scope": 6394,
+          "scope": 6422,
           "symbolAliases": [
             {
               "foreign": {
@@ -441,7 +441,7 @@
                   ],
                   "value": "TokenInfo"
                 },
-                "id": 6386,
+                "id": 6414,
                 "name": "Identifier",
                 "src": "144:9:29"
               }
@@ -449,7 +449,7 @@
           ],
           "unitAlias": ""
         },
-        "id": 6387,
+        "id": 6415,
         "name": "ImportDirective",
         "src": "135:44:29"
       },
@@ -457,28 +457,28 @@
         "attributes": {
           "abstract": true,
           "contractDependencies": [
-            1722,
-            6415
+            1750,
+            6443
           ],
           "contractKind": "contract",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            6393,
-            6415,
-            1722
+            6421,
+            6443,
+            1750
           ],
           "name": "ERC20WithTokenInfo",
           "nodes": [
             null
           ],
-          "scope": 6394
+          "scope": 6422
         },
         "children": [
           {
             "attributes": {
               "text": " @dev Interface for ERC20 token with token info\n NOTE: Using abstract contract instead of interfaces because old solidity\n does not support interface inheriting other interfaces\n solhint-disable-next-line no-empty-blocks"
             },
-            "id": 6388,
+            "id": 6416,
             "name": "StructuredDocumentation",
             "src": "182:245:29"
           },
@@ -488,15 +488,15 @@
               {
                 "attributes": {
                   "name": "IERC20",
-                  "referencedDeclaration": 1722,
+                  "referencedDeclaration": 1750,
                   "type": "contract IERC20"
                 },
-                "id": 6389,
+                "id": 6417,
                 "name": "UserDefinedTypeName",
                 "src": "513:6:29"
               }
             ],
-            "id": 6390,
+            "id": 6418,
             "name": "InheritanceSpecifier",
             "src": "513:6:29"
           },
@@ -506,25 +506,25 @@
               {
                 "attributes": {
                   "name": "TokenInfo",
-                  "referencedDeclaration": 6415,
+                  "referencedDeclaration": 6443,
                   "type": "contract TokenInfo"
                 },
-                "id": 6391,
+                "id": 6419,
                 "name": "UserDefinedTypeName",
                 "src": "521:9:29"
               }
             ],
-            "id": 6392,
+            "id": 6420,
             "name": "InheritanceSpecifier",
             "src": "521:9:29"
           }
         ],
-        "id": 6393,
+        "id": 6421,
         "name": "ContractDefinition",
         "src": "473:60:29"
       }
     ],
-    "id": 6394,
+    "id": 6422,
     "name": "SourceUnit",
     "src": "35:499:29"
   },
@@ -534,7 +534,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-08-05T04:13:00.143Z",
+  "updatedAt": "2021-08-05T14:42:15.124Z",
   "devdoc": {
     "details": "Interface for ERC20 token with token info NOTE: Using abstract contract instead of interfaces because old solidity does not support interface inheriting other interfaces solhint-disable-next-line no-empty-blocks",
     "kind": "dev",

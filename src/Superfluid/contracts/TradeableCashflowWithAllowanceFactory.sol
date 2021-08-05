@@ -1,17 +1,17 @@
 //SPDX-License-Identifier: MIT
 pragma solidity ^0.7.1;
 
-import "./TradeableCashflow.sol";
+import "./TradeableCashflowWithAllowance.sol";
 import {ISuperToken, IConstantFlowAgreementV1, ISuperfluid} from "./RedirectAll.sol";
 
-contract TradeableCashflowFactory {
+contract TradeableCashflowWithAllowanceFactory {
     ISuperfluid private _host; // host
     IConstantFlowAgreementV1 private _cfa; // the stored constant flow agreement class address
     ISuperToken private _acceptedToken; // accepted token
 
     event NewCashFlow(uint jobId,  address recipient, address sender);
-    mapping(uint => address) cashflowsRecipient;  
-    mapping(uint => address) cashflowsSender;  
+    mapping(uint => address) public cashflowsRecipient;  
+    mapping(uint => address) public cashflowsSender;  
 
     constructor(
         ISuperfluid host,
@@ -23,16 +23,33 @@ contract TradeableCashflowFactory {
         _acceptedToken = acceptedToken;
     }
 
+    //TODO: refactor
+    function createFlow(address recipient, int96 amount) internal {
+        _host.callAgreement(
+            _cfa,
+            abi.encodeWithSelector(
+                _cfa.createFlow.selector,
+                _acceptedToken,
+                recipient,
+                amount,
+                new bytes(0) // placeholder
+            ),
+            "0x"
+        );
+    }
+
     function createNewCashflow(
         address recipient,
         string memory name,
         string memory symbol,
         uint256 jobId,
+        //int96 maxFlow,
         int96 allowedFlow
     ) public {
-        TradeableCashflow newFlow = new TradeableCashflow(recipient, name, symbol, allowedFlow, msg.sender, _host, _cfa, _acceptedToken);
+        TradeableCashflowWithAllowance newFlow = new TradeableCashflowWithAllowance(recipient, name, symbol, allowedFlow, msg.sender, _host, _cfa, _acceptedToken);
         cashflowsRecipient[jobId] = address(newFlow);
         cashflowsSender[jobId] = msg.sender;
+        //createFlow(address(newFlow), maxFlow);
         emit NewCashFlow(jobId, address(newFlow), msg.sender);
     }
  

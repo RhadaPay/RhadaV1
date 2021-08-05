@@ -4,7 +4,7 @@ pragma solidity ^0.7.1;
 import {RedirectAll, ISuperToken, IConstantFlowAgreementV1, ISuperfluid} from "./RedirectAll.sol";
 import {ERC721} from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 
-contract TradeableCashflow is ERC721, RedirectAll {
+contract TradeableCashflowWithAllowance is ERC721, RedirectAll {
 
   constructor (
     address owner,
