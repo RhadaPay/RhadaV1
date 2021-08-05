@@ -4,15 +4,447 @@
 	},
 	"language": "Solidity",
 	"output": {
-		"abi": [],
+		"abi": [
+			{
+				"inputs": [],
+				"stateMutability": "nonpayable",
+				"type": "constructor"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "applicant",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "ApplicantApplied",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "applicant",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "ApplicantChosen",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "applicant",
+						"type": "address"
+					}
+				],
+				"name": "ApplicantSigned",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					}
+				],
+				"name": "CreatorSigned",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [],
+				"name": "DownpaymentChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "applicant",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "FinalSign",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "JobCompleted",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "downPayment",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "incrementPay",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "timeBeforeStakeRemoved",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "JobCreated",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "StakeRemoved",
+				"type": "event"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "applyForJob",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "address",
+						"name": "chosenApplicant",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "chooseApplicant",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "newDownPayment",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "configureJobDownPayment",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_downPayment",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_incrementPay",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "_timeBeforeStakeRemoved",
+						"type": "uint256"
+					}
+				],
+				"name": "createJob",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "finalSign",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "initApplicantSign",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "initCreatorSign",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "removeStake",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "stakeEther",
+				"outputs": [],
+				"stateMutability": "payable",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					}
+				],
+				"name": "submitWork",
+				"outputs": [],
+				"stateMutability": "nonpayable",
+				"type": "function"
+			}
+		],
 		"devdoc": {
 			"kind": "dev",
-			"methods": {},
+			"methods": {
+				"applyForJob(uint256)": {
+					"details": "Can flesh out a little bit more, but this is probably ok for now",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
+				},
+				"chooseApplicant(address,uint256)": {
+					"details": "Need to flesh out a little... Give applicant the choice to still choose the job before money is staked (do in signing process)For the above, make sure the states are worked out",
+					"params": {
+						"chosenApplicant": "The applicant who is accepted",
+						"jobID": "The ID of a specific job*"
+					}
+				},
+				"configureJobDownPayment(uint256,uint256)": {
+					"details": "downpayment will be confirmed during the signing process",
+					"params": {
+						"jobID": "The ID of a specific job*",
+						"newDownPayment": "The new down payment"
+					}
+				},
+				"createJob(uint256,uint256,uint256)": {
+					"details": "Some variables may be unneeded, such as the creator signing varlook into incrementPayLook into timeBeforeStakeRemoved",
+					"params": {
+						"_downPayment": "The initial downpayment that is staked by the job creator",
+						"_incrementPay": "The initial increment per event (more on this... probably an oracle is the right way to go about this param. Could also standardize it)",
+						"_timeBeforeStakeRemoved": "The time before the job creator can remove his stake after the job is submitted*"
+					}
+				},
+				"finalSign(uint256)": {
+					"details": "Refusals and states",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
+				},
+				"initApplicantSign(uint256)": {
+					"details": "Make sure states make sense. Add a function to withdraw",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
+				},
+				"initCreatorSign(uint256)": {
+					"details": "Check the states",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
+				},
+				"removeStake(uint256)": {
+					"details": "Need to discuss this idea more. Worker should be guaranteed some pay + extra as an investment",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
+				},
+				"stakeEther(uint256)": {
+					"details": "This function is most likely not logically written. Staking should be done inside the signing method*"
+				},
+				"submitWork(uint256)": {
+					"details": "Check states. Probably need a bool for simple storage. Should emphasize       communicating with the job creator before submissionImplement states and refusals",
+					"params": {
+						"jobID": "The ID of a specific job*"
+					}
+				}
+			},
 			"version": 1
 		},
 		"userdoc": {
 			"kind": "user",
-			"methods": {},
+			"methods": {
+				"applyForJob(uint256)": {
+					"notice": "Applicants apply for a specific job"
+				},
+				"chooseApplicant(address,uint256)": {
+					"notice": "The job creator can choose an applicant for his job"
+				},
+				"configureJobDownPayment(uint256,uint256)": {
+					"notice": "The job creator can configure the down payment before finalizing his choice of applicant"
+				},
+				"createJob(uint256,uint256,uint256)": {
+					"notice": "A new job is created with the terms set by the job creator"
+				},
+				"finalSign(uint256)": {
+					"notice": "The job creators final sign off. Signals event tracking and the payment stream"
+				},
+				"initApplicantSign(uint256)": {
+					"notice": "The applicant signs off and agrees to do a job. The applicant can still withdraw from the commitment before the creator also signs off"
+				},
+				"initCreatorSign(uint256)": {
+					"notice": "The creator officially signs off and the job process starts"
+				},
+				"removeStake(uint256)": {
+					"notice": "The job creator can remove his stake after the allotted time"
+				},
+				"stakeEther(uint256)": {
+					"notice": "Ether is staked by the creator for the job."
+				},
+				"submitWork(uint256)": {
+					"notice": "Signals that work is submitted. Acts as the applicant signing"
+				}
+			},
+			"notice": "TO DO: Check states Check the logic behind withdrawing funds after certain amount of time Implement \"loan\" idea. Also flesh out and discuss it more. Implement a function where creator can only increase his holdings              Hard to do w/o someone (the seller) being punished Implement the streampay Clean up code + comments Fix the stake ether function. Remove and put elsewhere Put more withdrawal functions in case Add a stake for the worker to make up for gas fees if bails on job? Does this act as more of a deterrent though? Begin testing*",
 			"version": 1
 		}
 	},
@@ -33,11 +465,11 @@
 	},
 	"sources": {
 		"src/Backend/Contracts/PaymentFactory.sol": {
-			"keccak256": "0xe5475f01b2424527ff93503c8aba51d75bf462dbae27f598b269bc3fc09d159c",
+			"keccak256": "0xf14ee2f1cef13bc9bd72713b592b4947f2fd3cd6d3338d70a5b58e0504db3e1b",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://ee21041cd726000b0ecc9de54cb01a2da5739cced1818b2cc9103ba1d6ae0a2c",
-				"dweb:/ipfs/QmfEFAPeZzrw7WKZGStsTKsDoECqAMDSyboC5sU4metzJX"
+				"bzz-raw://bb375a60092b845d020e5be0813b56d7e7b23f3c43e9ffd91a7656e932d33c59",
+				"dweb:/ipfs/QmbTgWxENSyaoT5JY4BbZsXKvr7hVySdr4yfNHabHSUXJD"
 			]
 		}
 	},
