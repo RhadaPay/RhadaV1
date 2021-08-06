@@ -1,6 +1,6 @@
 {
 	"compiler": {
-		"version": "0.8.4+commit.c7e474f2"
+		"version": "0.7.1+commit.f4a555be"
 	},
 	"language": "Solidity",
 	"output": {
@@ -53,15 +53,15 @@
 				"inputs": [
 					{
 						"indexed": false,
-						"internalType": "uint256",
-						"name": "jobID",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
 						"internalType": "address",
 						"name": "applicant",
 						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
 					}
 				],
 				"name": "ApplicantSigned",
@@ -72,15 +72,15 @@
 				"inputs": [
 					{
 						"indexed": false,
-						"internalType": "uint256",
-						"name": "jobID",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
 						"internalType": "address",
 						"name": "creator",
 						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
 					}
 				],
 				"name": "CreatorSigned",
@@ -90,6 +90,37 @@
 				"anonymous": false,
 				"inputs": [],
 				"name": "DownpaymentChanged",
+				"type": "event"
+			},
+			{
+				"anonymous": false,
+				"inputs": [
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "address",
+						"name": "applicant",
+						"type": "address"
+					},
+					{
+						"indexed": false,
+						"internalType": "uint256",
+						"name": "jobID",
+						"type": "uint256"
+					},
+					{
+						"indexed": false,
+						"internalType": "bool",
+						"name": "law",
+						"type": "bool"
+					}
+				],
+				"name": "FinalResult",
 				"type": "event"
 			},
 			{
@@ -142,19 +173,7 @@
 					{
 						"indexed": false,
 						"internalType": "uint256",
-						"name": "downPayment",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "incrementPay",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "timeBeforeStakeRemoved",
+						"name": "initAmount",
 						"type": "uint256"
 					},
 					{
@@ -165,31 +184,6 @@
 					}
 				],
 				"name": "JobCreated",
-				"type": "event"
-			},
-			{
-				"anonymous": false,
-				"inputs": [
-					{
-						"indexed": false,
-						"internalType": "address",
-						"name": "creator",
-						"type": "address"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "amount",
-						"type": "uint256"
-					},
-					{
-						"indexed": false,
-						"internalType": "uint256",
-						"name": "jobID",
-						"type": "uint256"
-					}
-				],
-				"name": "StakeRemoved",
 				"type": "event"
 			},
 			{
@@ -227,7 +221,7 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "newDownPayment",
+						"name": "newAmount",
 						"type": "uint256"
 					},
 					{
@@ -236,7 +230,7 @@
 						"type": "uint256"
 					}
 				],
-				"name": "configureJobDownPayment",
+				"name": "configureAmount",
 				"outputs": [],
 				"stateMutability": "nonpayable",
 				"type": "function"
@@ -245,17 +239,7 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "_downPayment",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_incrementPay",
-						"type": "uint256"
-					},
-					{
-						"internalType": "uint256",
-						"name": "_timeBeforeStakeRemoved",
+						"name": "_initAmount",
 						"type": "uint256"
 					}
 				],
@@ -266,6 +250,30 @@
 			},
 			{
 				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "finalApplicant",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "bool",
+						"name": "law",
+						"type": "bool"
+					},
 					{
 						"internalType": "uint256",
 						"name": "jobID",
@@ -300,19 +308,6 @@
 				],
 				"name": "initCreatorSign",
 				"outputs": [],
-				"stateMutability": "nonpayable",
-				"type": "function"
-			},
-			{
-				"inputs": [
-					{
-						"internalType": "uint256",
-						"name": "jobID",
-						"type": "uint256"
-					}
-				],
-				"name": "removeStake",
-				"outputs": [],
 				"stateMutability": "payable",
 				"type": "function"
 			},
@@ -320,13 +315,68 @@
 				"inputs": [
 					{
 						"internalType": "uint256",
-						"name": "jobID",
+						"name": "",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "",
 						"type": "uint256"
 					}
 				],
-				"name": "stakeEther",
-				"outputs": [],
-				"stateMutability": "payable",
+				"name": "jobToApplicants",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"stateMutability": "view",
+				"type": "function"
+			},
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"name": "jobs",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "creator",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "enum PaymentFactory.State",
+						"name": "state",
+						"type": "uint8"
+					},
+					{
+						"internalType": "bool",
+						"name": "creatorSigned",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "applicantSigned",
+						"type": "bool"
+					},
+					{
+						"internalType": "bool",
+						"name": "workSubmitted",
+						"type": "bool"
+					}
+				],
+				"stateMutability": "view",
 				"type": "function"
 			},
 			{
@@ -359,29 +409,21 @@
 						"jobID": "The ID of a specific job*"
 					}
 				},
-				"configureJobDownPayment(uint256,uint256)": {
-					"details": "downpayment will be confirmed during the signing process",
+				"createJob(uint256)": {
+					"details": "Look into mediation and whether or not names/descs should be held in the backend",
+					"params": {
+						"_initAmount": "The initial amount that is staked by the job creator*"
+					}
+				},
+				"finalSign(bool,uint256)": {
+					"details": "Include ability to refuse? Who would pay gas to refuse? Just don't pay...In response to above comment: could be where mediation comes in. Mediator checks work, then decides who receives stake?Would need to emphasize a high initAmount in that case",
 					"params": {
 						"jobID": "The ID of a specific job*",
-						"newDownPayment": "The new down payment"
-					}
-				},
-				"createJob(uint256,uint256,uint256)": {
-					"details": "Some variables may be unneeded, such as the creator signing varlook into incrementPayLook into timeBeforeStakeRemoved",
-					"params": {
-						"_downPayment": "The initial downpayment that is staked by the job creator",
-						"_incrementPay": "The initial increment per event (more on this... probably an oracle is the right way to go about this param. Could also standardize it)",
-						"_timeBeforeStakeRemoved": "The time before the job creator can remove his stake after the job is submitted*"
-					}
-				},
-				"finalSign(uint256)": {
-					"details": "Refusals and states",
-					"params": {
-						"jobID": "The ID of a specific job*"
+						"law": "Dictates whether the work is accepted or rejected. True to accept, false to reject"
 					}
 				},
 				"initApplicantSign(uint256)": {
-					"details": "Make sure states make sense. Add a function to withdraw",
+					"details": "Add init stake to prevent bailing? May be a deterrent...",
 					"params": {
 						"jobID": "The ID of a specific job*"
 					}
@@ -391,15 +433,6 @@
 					"params": {
 						"jobID": "The ID of a specific job*"
 					}
-				},
-				"removeStake(uint256)": {
-					"details": "Need to discuss this idea more. Worker should be guaranteed some pay + extra as an investment",
-					"params": {
-						"jobID": "The ID of a specific job*"
-					}
-				},
-				"stakeEther(uint256)": {
-					"details": "This function is most likely not logically written. Staking should be done inside the signing method*"
 				},
 				"submitWork(uint256)": {
 					"details": "Check states. Probably need a bool for simple storage. Should emphasize       communicating with the job creator before submissionImplement states and refusals",
@@ -419,13 +452,13 @@
 				"chooseApplicant(address,uint256)": {
 					"notice": "The job creator can choose an applicant for his job"
 				},
-				"configureJobDownPayment(uint256,uint256)": {
-					"notice": "The job creator can configure the down payment before finalizing his choice of applicant"
+				"configureAmount(uint256,uint256)": {
+					"notice": "notice The job creator can configure the down payment before finalizing his choice of applicant dev downpayment will be confirmed during the signing process param newAmount The new down payment param jobID The ID of a specific job*"
 				},
-				"createJob(uint256,uint256,uint256)": {
+				"createJob(uint256)": {
 					"notice": "A new job is created with the terms set by the job creator"
 				},
-				"finalSign(uint256)": {
+				"finalSign(bool,uint256)": {
 					"notice": "The job creators final sign off. Signals event tracking and the payment stream"
 				},
 				"initApplicantSign(uint256)": {
@@ -434,23 +467,17 @@
 				"initCreatorSign(uint256)": {
 					"notice": "The creator officially signs off and the job process starts"
 				},
-				"removeStake(uint256)": {
-					"notice": "The job creator can remove his stake after the allotted time"
-				},
-				"stakeEther(uint256)": {
-					"notice": "Ether is staked by the creator for the job."
-				},
 				"submitWork(uint256)": {
 					"notice": "Signals that work is submitted. Acts as the applicant signing"
 				}
 			},
-			"notice": "TO DO: Check states Check the logic behind withdrawing funds after certain amount of time Implement \"loan\" idea. Also flesh out and discuss it more. Implement a function where creator can only increase his holdings              Hard to do w/o someone (the seller) being punished Implement the streampay Clean up code + comments Fix the stake ether function. Remove and put elsewhere Put more withdrawal functions in case Add a stake for the worker to make up for gas fees if bails on job? Does this act as more of a deterrent though? Begin testing*",
+			"notice": "TO DO: Check states Withdrawing funds Mediation Implement loan idea. Also flesh out and discuss it more. Implement a function where creator can only increase his holdings              Hard to do w/o someone (the seller) being punished Implement the streampay Clean up code + comments Add a stake for the worker to make up for gas fees if bails on job? Does this act as more of a deterrent though? Begin testing Add require statements + messages w/ require statements*",
 			"version": 1
 		}
 	},
 	"settings": {
 		"compilationTarget": {
-			"src/Backend/Contracts/PaymentFactory.sol": "PaymentFactory"
+			"src/Backend/contracts/PaymentFactory.sol": "PaymentFactory"
 		},
 		"evmVersion": "istanbul",
 		"libraries": {},
@@ -464,12 +491,12 @@
 		"remappings": []
 	},
 	"sources": {
-		"src/Backend/Contracts/PaymentFactory.sol": {
-			"keccak256": "0xf14ee2f1cef13bc9bd72713b592b4947f2fd3cd6d3338d70a5b58e0504db3e1b",
+		"src/Backend/contracts/PaymentFactory.sol": {
+			"keccak256": "0x69498daa6dd1d440e6e495ce5af28d6e8fbaf4113905e44cbdfeff3a27f02da8",
 			"license": "MIT",
 			"urls": [
-				"bzz-raw://bb375a60092b845d020e5be0813b56d7e7b23f3c43e9ffd91a7656e932d33c59",
-				"dweb:/ipfs/QmbTgWxENSyaoT5JY4BbZsXKvr7hVySdr4yfNHabHSUXJD"
+				"bzz-raw://697e92b8c50bf46cfc886b98a92ac110ca9fcb77a27d308b94d9b2773d615afa",
+				"dweb:/ipfs/Qmbd3MXJiYpa8wJNnJAZGaJA8syH6mzFePvBirFPiNT8zc"
 			]
 		}
 	},
