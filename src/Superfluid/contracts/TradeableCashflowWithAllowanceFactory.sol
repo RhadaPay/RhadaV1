@@ -46,6 +46,7 @@ contract TradeableCashflowWithAllowanceFactory {
         //int96 maxFlow,
         int96 allowedFlow
     ) public {
+        require(cashflowsRecipient[jobId] == address(0), "JobId already used");
         TradeableCashflowWithAllowance newFlow = new TradeableCashflowWithAllowance(recipient, name, symbol, allowedFlow, msg.sender, _host, _cfa, _acceptedToken);
         cashflowsRecipient[jobId] = address(newFlow);
         cashflowsSender[jobId] = msg.sender;

@@ -52,7 +52,20 @@ module.exports = {
       //confirmations: 6, // # of confs to wait between deployments. (default: 0)
       timeoutBlocks: 100, // # of blocks before a deployment times out  (minimum/default: 50)
       skipDryRun: true // Skip dry run before migrations? (default: false for public nets )
-  }
+  },
+  mumbai: {
+    provider: () =>
+        new HDWalletProvider(
+            process.env.PRIVATE_KEY,
+            process.env.MUMBAI_PROVIDER_URL
+        ),
+    network_id: 80001, // Mumbai's id
+    gas: GAS_LIMIT,
+    gasPrice: 11e9, // 10 GWEI
+    //confirmations: 6, // # of confs to wait between deployments. (default: 0)
+    timeoutBlocks: 100, // # of blocks before a deployment times out  (minimum/default: 50)
+    skipDryRun: true // Skip dry run before migrations? (default: false for public nets )
+}
   },
 
   // Set default mocha options here, use special reporters etc.

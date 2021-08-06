@@ -13,9 +13,14 @@ contract RedirectAll is SuperAppBase {
     IConstantFlowAgreementV1 private _cfa; // the stored constant flow agreement class address
     ISuperToken private _acceptedToken; // accepted token
 
-    address private _receiver;
-    address private _sender;
-    int96 private _allowedFlow;
+    address public _receiver;
+    address public _sender;
+    int96 public _allowedFlow;
+
+    event ReceiverChanged(address receiver);
+    event FlowUpdated(int96 inFlow, int96 outflow, int96 refundFlow);
+    event NewAgreement(address sender, address receiver);
+
 
     constructor(
         ISuperfluid host,
@@ -73,6 +78,9 @@ contract RedirectAll is SuperAppBase {
             _sender
         ); // CHECK: unclear what happens if flow doesn't exist.
 
+        int96 newRefundFlow = 0;
+        int96 newOutFlow = inFlowRate;
+
         // @dev If inFlowRate === 0, then delete existing flow.
         if (inFlowRate == int96(0)) {
             deleteFlow(_receiver);
@@ -80,12 +88,10 @@ contract RedirectAll is SuperAppBase {
                 deleteFlow(_sender);
             }
         } else {
-            int96 newRefundFlow;
             if (inFlowRate > _allowedFlow) {
                 newRefundFlow = inFlowRate - _allowedFlow;
+                newOutFlow -= newRefundFlow;
             }
-
-            int96 newOutFlow = inFlowRate - newRefundFlow;
 
             if (outFlowRate > 0) {
                 updateFlow(_receiver, newOutFlow);
@@ -106,7 +112,9 @@ contract RedirectAll is SuperAppBase {
                 }
             }
         }
+        emit FlowUpdated(inFlowRate, newOutFlow, newRefundFlow);
     }
+
 
     /**************************************************************************
      * Redirect Logic
@@ -131,7 +139,6 @@ contract RedirectAll is SuperAppBase {
         }
     }
 
-    event ReceiverChanged(address receiver); //what is this?
 
     /**************************************************************************
      * Utiliy methods for Superfluid
@@ -246,19 +253,22 @@ contract RedirectAll is SuperAppBase {
             _acceptedToken,
             _sender,
             address(this)
-        ); // CHECK: unclear what happens if flow doesn't exist.
+        );
 
         (, int96 outFlowRate, , ) = _cfa.getFlow(
             _acceptedToken,
             address(this),
             _receiver
-        ); // CHECK: unclear what happens if flow doesn't exist.
+        );
 
         (, int96 refundFlowRate, , ) = _cfa.getFlow(
             _acceptedToken,
             address(this),
             _sender
-        ); // CHECK: unclear what happens if flow doesn't exist.
+        );
+
+        int96 newRefundFlow = 0;
+        int96 newOutFlow = inFlowRate;
 
         // @dev If inFlowRate === 0, then delete existing flow.
         if (inFlowRate == int96(0)) {
@@ -267,12 +277,12 @@ contract RedirectAll is SuperAppBase {
                 newCtx = deleteFlowWithCtx(_sender, newCtx);
             }
         } else {
-            int96 newRefundFlow;
+            
             if (inFlowRate > _allowedFlow) {
                 newRefundFlow = inFlowRate - _allowedFlow;
+                newOutFlow -=  newRefundFlow;
             }
 
-            int96 newOutFlow = inFlowRate - newRefundFlow;
 
             if (outFlowRate > 0) {
                 newCtx = updateFlowWithCtx(_receiver, newOutFlow, newCtx);
@@ -293,6 +303,7 @@ contract RedirectAll is SuperAppBase {
                 }
             }
         }
+        emit FlowUpdated(inFlowRate, newOutFlow, newRefundFlow);
     }
 
     // @dev Change the Receiver of the total flow
@@ -360,7 +371,9 @@ contract RedirectAll is SuperAppBase {
         returns (bytes memory newCtx)
     {
         //Only consider flows from the sender
-        (address flowSender, ) = abi.decode(agreementData, (address, address));
+        (address flowSender, address flowReceiver ) = abi.decode(agreementData, (address, address));
+        emit NewAgreement(flowSender, flowReceiver);
+
         if (flowSender == _sender) {
             return _updateOutflow(_ctx);
         } else {
@@ -383,7 +396,9 @@ contract RedirectAll is SuperAppBase {
         returns (bytes memory newCtx)
     {
         //Only consider flows from the sender
-        (address flowSender, ) = abi.decode(agreementData, (address, address));
+        (address flowSender, address flowReceiver ) = abi.decode(agreementData, (address, address));
+        emit NewAgreement(flowSender, flowReceiver);
+
         if (flowSender == _sender) {
             return _updateOutflow(_ctx);
         } else {
@@ -404,7 +419,9 @@ contract RedirectAll is SuperAppBase {
         if (!_isSameToken(_superToken) || !_isCFAv1(_agreementClass))
             return _ctx;
         //Only consider flows from the sender
-        (address flowSender, ) = abi.decode(agreementData, (address, address));
+        (address flowSender, address flowReceiver ) = abi.decode(agreementData, (address, address));
+        emit NewAgreement(flowSender, flowReceiver);
+        
         if (flowSender == _sender) {
             return _updateOutflow(_ctx);
         } else {
