@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 
 pragma solidity ^0.7.1;
+pragma experimental ABIEncoderV2;
 
 /** TO DO:
  * Check states
@@ -50,19 +51,17 @@ contract PaymentFactory {
      * Individual events are not stored on the blockchain, but instead can be viewed in IPFS
     **/ 
     struct EventStream {
-        string name;
-        string[] eventCIDs;
-        uint8 numberOfEvents;
+        string[] batches;
+        uint8 refreshCadence;
     }
 
     struct Job {
         address creator;
         uint amount;
-        uint eventStreamID;
-        uint8 refreshCadence;
         bool creatorSigned;
         bool applicantSigned;
         bool workSubmitted;
+        EventStream eventStream;
         State state;
     }
 
@@ -75,8 +74,9 @@ contract PaymentFactory {
     EventStream[] public eventStreams;
     
     // Events
-    event JobCreated(address creator, uint initAmount, uint jobID, uint eventStreamId, uint refeshCadence);
-    event DownpaymentChanged();
+    event JobCreated(address creator, uint initAmount, uint jobID);
+    event EventStreamCreated(string[] batches, uint8 refreshCadence);
+    event AmountChanged(uint amount, uint jobID);
     event ApplicantApplied(address applicant, uint jobID);
     event ApplicantChosen(address applicant, uint jobID);
     event ApplicantSigned(address applicant, uint jobID);
@@ -107,35 +107,50 @@ contract PaymentFactory {
     }
         
     // Public functions
+    /**
+     * @notice Creates a specific event stream
+     * @dev Need a create batch function
+     * @dev Should it be a string array or a bytes/bytes32 array?
+     * @param _batches List of event batches
+     * @param _refreshCadence Number of events before triggering a payment refresh
+    **/
+    function _createEventStream(string[] memory _batches, uint8 _refreshCadence) private returns(EventStream memory) {
+        emit EventStreamCreated(_batches, _refreshCadence);
+        return EventStream({
+            batches: _batches,
+            refreshCadence: _refreshCadence
+            });
+        
+    }
     
     /**
      * @notice A new job is created with the terms set by the job creator
      * @dev Look into mediation and whether or not names/descs should be held in the backend
      * @param _initAmount The initial amount that is staked by the job creator
      **/
-    function createJob(uint _initAmount) public {
+    function createJob(uint _initAmount, string[] memory _batches, uint8 _refreshCadence) public {
         jobs.push(Job({
             creator: msg.sender,
             amount: _initAmount,
-            state: State.Open,
             creatorSigned: false,
             applicantSigned: false,
             workSubmitted: false,
-
-            eventStreamId: _eventStreamId,
-            numberOfEvents: 0,
-            refreshCadence: _refreshCadence
+            eventStream: _createEventStream(_batches, _refreshCadence),
+            state: State.Open
         }));
         uint jobID = jobs.length - 1;
-        emit JobCreated(msg.sender, _initAmount, jobID, _eventStreamId, _refreshCadence);
+        emit JobCreated(msg.sender, _initAmount, jobID);
     }
 
-    /**
-     *
-     *
-     *
-     *
-     */
+    // Maybe allow adding of batches in any state? Does leave open to possible errors
+    function addBatch(string memory batchHash, uint jobID) public auth(jobs[jobID].creator) inState(State.Open, jobID) {
+        
+    }
+
+    function changeRefreshRate(uint8 newRefreshCadence, uint jobID) public auth(jobs[jobID].creator) inState(State.Open, jobID) {
+        require(newRefreshCadence > 0, "Refresh rate needs to be greater than 0.");
+        (jobs[jobID].eventStream).refreshCadence = newRefreshCadence;
+    }
     
     /**
      * notice The job creator can configure the down payment before finalizing his choice of applicant
@@ -224,10 +239,5 @@ contract PaymentFactory {
             // Mediation? Receive stake back after mediation?
         }
         emit FinalResult(msg.sender, finalApplicant[jobID], jobID, result);
-    }
-
-    function updateNumberOfEvents(uint jobID, uint8 newTotal) public {
-        jobs[jobID].numberOfEvents = newTotal;
-        emit UpdateNumberOfEvents(jobs[jobID].eventStreamId, newTotal, jobID);
     }
 }
