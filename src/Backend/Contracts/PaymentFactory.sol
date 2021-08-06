@@ -38,6 +38,7 @@ contract PaymentFactory {
         // additional linkages to an eventStream
         uint eventStreamId;
         uint numberOfEvents;
+        uint refreshCadence;
     }
     
     // Mappings
@@ -48,7 +49,7 @@ contract PaymentFactory {
     Job[] public jobs;
     
     // Events
-    event JobCreated(address creator, uint initAmount, uint jobID);
+    event JobCreated(address creator, uint initAmount, uint jobID, uint eventStreamId, uint refeshCadence);
     event DownpaymentChanged();
     event ApplicantApplied(address applicant, uint jobID);
     event ApplicantChosen(address applicant, uint jobID);
@@ -87,7 +88,7 @@ contract PaymentFactory {
      * @dev Look into mediation and whether or not names/descs should be held in the backend
      * @param _initAmount The initial amount that is staked by the job creator
      **/
-    function createJob(uint _initAmount, uint _eventStreamId) public {
+    function createJob(uint _initAmount, uint _eventStreamId, uint _refeshCadence) public {
         jobs.push(Job({
             creator: msg.sender,
             amount: _initAmount,
@@ -97,10 +98,11 @@ contract PaymentFactory {
             workSubmitted: false,
 
             eventStreamId: _eventStreamId,
-            numberOfEvents: 0
+            numberOfEvents: 0,
+            refreshCadence: _refreshCadence
         }));
         uint jobID = jobs.length - 1;
-        emit JobCreated(msg.sender, _initAmount, jobID);
+        emit JobCreated(msg.sender, _initAmount, jobID, _eventStreamId, _refreshCadence);
     }
     
     /**
