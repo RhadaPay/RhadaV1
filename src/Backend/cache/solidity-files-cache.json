@@ -1,0 +1,73 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "/mnt/c/users/ksilv/onedrive/documents/github/rhada/rhadav1/src/backend/contracts/EventStream.sol": {
+      "lastModificationDate": 1628274675321,
+      "contentHash": "c7fc611d01819ac01367c3206505755a",
+      "sourceName": "contracts/EventStream.sol",
+      "solcConfig": {
+        "version": "0.7.3",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.1"
+      ],
+      "artifacts": [
+        "EventStreamFactory"
+      ]
+    },
+    "/mnt/c/users/ksilv/onedrive/documents/github/rhada/rhadav1/src/backend/contracts/PaymentFactory.sol": {
+      "lastModificationDate": 1628274784539,
+      "contentHash": "6df5c3186c15f223aa81c87a9e42f030",
+      "sourceName": "contracts/PaymentFactory.sol",
+      "solcConfig": {
+        "version": "0.7.3",
+        "settings": {
+          "optimizer": {
+            "enabled": false,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.1"
+      ],
+      "artifacts": [
+        "PaymentFactory"
+      ]
+    }
+  }
+}

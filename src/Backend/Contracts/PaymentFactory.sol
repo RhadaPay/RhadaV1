@@ -22,31 +22,57 @@ contract PaymentFactory {
      * Signing: The job creator can no longer change the variables, applicants can no longer apply, the job creator may withdraw
      *          from the deal, the job creator stakes during his signing, the applicant agrees to the set terms before he or she was chosen
      * Signed: The applicant may submit his or her work
-     * Completed: The work is submitted
      * Closed: The job creator and the chosen applicant sign off on the final work, creating the payment stream and beginning the event tracker
      **/ 
-    enum State {Open, Signing, Signed, Completed, Closed}
-    
+    enum State {Open, Signing, Signed, Closed}
+
+    /** For @jordaniza
+     * I merged the two contracts to save on gas and make it neater
+     * I organized the structs so that the job would only have job-related
+     *      items and that the EventStream would only have items related to that.
+     *       I thought that it helped w/ organization and clarity. It also allows us
+     *       to not have to keep track of an EventStream ID and to easily interact
+     *       with the EventStream functions separately 
+     * Storage is very important so I changed uints to uint8, uint16, etc. In solidity:
+     *     outside of a struct, uints are always allocated as uint256s regardless of what you put them as.
+     *     Inside of a struct however, if you declare uints all next to each other, the storage is merged.
+     *      So, rather than wasting storage + increasing gas costs, we can reduce the allocation while
+     *      ensuring that the numbers inputted will never logically go over the number of bytes limited by the integer
+     *
+     *
+    **/
+
+
+    /** EventStream:
+     * An EventStream exists independently of Jobs and exists to group Real-World Events
+     * Every time we want to start capturing a new sequence of events, we instantiate a new event stream
+     * Jobs can be connected to event streams by referencing the stream ID
+     * Individual events are not stored on the blockchain, but instead can be viewed in IPFS
+    **/ 
+    struct EventStream {
+        string name;
+        string[] eventCIDs;
+        uint8 numberOfEvents;
+    }
+
     struct Job {
         address creator;
         uint amount;
-        State state;
+        uint eventStreamID;
+        uint8 refreshCadence;
         bool creatorSigned;
         bool applicantSigned;
         bool workSubmitted;
-
-        // additional linkages to an eventStream
-        uint eventStreamId;
-        uint numberOfEvents;
-        uint refreshCadence;
+        State state;
     }
-    
+
     // Mappings
     mapping(uint => address[]) public jobToApplicants;
     mapping(uint => address) public finalApplicant;
     
     // Arrays
     Job[] public jobs;
+    EventStream[] public eventStreams;
     
     // Events
     event JobCreated(address creator, uint initAmount, uint jobID, uint eventStreamId, uint refeshCadence);
@@ -57,9 +83,8 @@ contract PaymentFactory {
     event CreatorSigned(address creator, uint jobID);
     event JobCompleted(uint jobID);
     event FinalSign(address creator, address applicant, uint jobID);
-    event FinalResult(address creator, address applicant, uint jobID, bool law);
-
-    event UpdateNumberOfEvents(uint jobId, uint eventStreamId, uint newTotal);
+    event FinalResult(address creator, address applicant, uint jobID, bool result);
+    event UpdateNumberOfEvents(uint newTotal, uint jobID);
 
     constructor() {}
     
@@ -88,7 +113,7 @@ contract PaymentFactory {
      * @dev Look into mediation and whether or not names/descs should be held in the backend
      * @param _initAmount The initial amount that is staked by the job creator
      **/
-    function createJob(uint _initAmount, uint _eventStreamId, uint _refeshCadence) public {
+    function createJob(uint _initAmount) public {
         jobs.push(Job({
             creator: msg.sender,
             amount: _initAmount,
@@ -104,6 +129,13 @@ contract PaymentFactory {
         uint jobID = jobs.length - 1;
         emit JobCreated(msg.sender, _initAmount, jobID, _eventStreamId, _refreshCadence);
     }
+
+    /**
+     *
+     *
+     *
+     *
+     */
     
     /**
      * notice The job creator can configure the down payment before finalizing his choice of applicant
@@ -180,22 +212,22 @@ contract PaymentFactory {
      * @dev Include ability to refuse? Who would pay gas to refuse? Just don't pay...
      * @dev In response to above comment: could be where mediation comes in. Mediator checks work, then decides who receives stake?
      * @dev Would need to emphasize a high initAmount in that case
-     * @param law Dictates whether the work is accepted or rejected. True to accept, false to reject
+     * @param result Dictates whether the work is accepted or rejected. True to accept, false to reject
      * @param jobID The ID of a specific job
      **/
-    function finalSign(bool law, uint jobID) public auth(jobs[jobID].creator) {
+    function finalSign(bool result, uint jobID) public auth(jobs[jobID].creator) {
         require(jobs[jobID].workSubmitted == true);
         jobs[jobID].state = State.Closed;
-        if(law) {
+        if(result) {
             // Begin payment stream + events
-        } else if(!law) {
+        } else if(!result) {
             // Mediation? Receive stake back after mediation?
         }
-        emit FinalResult(msg.sender, finalApplicant[jobID], jobID, law);
+        emit FinalResult(msg.sender, finalApplicant[jobID], jobID, result);
     }
 
-    function updateNumberOfEvents(uint jobId, uint newTotal) public {
-        Jobs[jobID].numberOfEvents = newTotal;
-        emit UpdateNumberOfEvents(jobId, Jobs[jobId].eventStreamId, newTotal);
+    function updateNumberOfEvents(uint jobID, uint8 newTotal) public {
+        jobs[jobID].numberOfEvents = newTotal;
+        emit UpdateNumberOfEvents(jobs[jobID].eventStreamId, newTotal, jobID);
     }
 }
