@@ -27,23 +27,6 @@ contract PaymentFactory {
      **/ 
     enum State {Open, Signing, Signed, Closed}
 
-    /** For @jordaniza
-     * I merged the two contracts to save on gas and make it neater
-     * I organized the structs so that the job would only have job-related
-     *      items and that the EventStream would only have items related to that.
-     *       I thought that it helped w/ organization and clarity. It also allows us
-     *       to not have to keep track of an EventStream ID and to easily interact
-     *       with the EventStream functions separately 
-     * Storage is very important so I changed uints to uint8, uint16, etc. In solidity:
-     *     outside of a struct, uints are always allocated as uint256s regardless of what you put them as.
-     *     Inside of a struct however, if you declare uints all next to each other, the storage is merged.
-     *      So, rather than wasting storage + increasing gas costs, we can reduce the allocation while
-     *      ensuring that the numbers inputted will never logically go over the number of bytes limited by the integer
-     *
-     *
-    **/
-
-
     /** EventStream:
      * An EventStream exists independently of Jobs and exists to group Real-World Events
      * Every time we want to start capturing a new sequence of events, we instantiate a new event stream
@@ -64,7 +47,7 @@ contract PaymentFactory {
         EventStream eventStream;
         State state;
     }
-
+    
     // Mappings
     mapping(uint => address[]) public jobToApplicants;
     mapping(uint => address) public finalApplicant;
