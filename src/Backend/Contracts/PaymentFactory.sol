@@ -7,13 +7,10 @@ pragma experimental ABIEncoderV2;
  * Check states
  * Withdrawing funds
  * Mediation
- * Implement loan idea. Also flesh out and discuss it more. Implement a function where creator can only increase his holdings
- *              Hard to do w/o someone (the seller) being punished
- * Implement the streampay
- * Clean up code + comments
- * Add a stake for the worker to make up for gas fees if bails on job? Does this act as more of a deterrent though?
- * Begin testing
- * Add require statements + messages w/ require statements
+ * Fix up require statements
+ * Loan idea
+ * Integrate contracts
+ * Complete all events
  **/ 
 
 contract PaymentFactory {
@@ -27,24 +24,20 @@ contract PaymentFactory {
      **/ 
     enum State {Open, Signing, Signed, Closed}
 
-    /** EventStream:
-     * An EventStream exists independently of Jobs and exists to group Real-World Events
-     * Every time we want to start capturing a new sequence of events, we instantiate a new event stream
-     * Jobs can be connected to event streams by referencing the stream ID
-     * Individual events are not stored on the blockchain, but instead can be viewed in IPFS
-    **/ 
     struct EventStream {
-        string[] batches;
-        uint8 refreshCadence;
+        string descriptor;
+        string[] cid;
     }
 
     struct Job {
         address creator;
         uint amount;
+        uint eventsRemainder;
+        uint refreshRate;
+        uint64[] eventStreamIDs;
         bool creatorSigned;
         bool applicantSigned;
         bool workSubmitted;
-        EventStream eventStream;
         State state;
     }
     
@@ -57,8 +50,8 @@ contract PaymentFactory {
     EventStream[] public eventStreams;
     
     // Events
-    event JobCreated(address creator, uint initAmount, uint jobID);
-    event EventStreamCreated(string[] batches, uint8 refreshCadence);
+    event JobCreated(address creator, uint initAmount, uint refreshRate, uint jobID);
+    event EventStreamCreated(string descriptor, uint streamID);
     event AmountChanged(uint amount, uint jobID);
     event ApplicantApplied(address applicant, uint jobID);
     event ApplicantChosen(address applicant, uint jobID);
@@ -88,17 +81,27 @@ contract PaymentFactory {
         require(jobs[jobID].state == _state, "Incorrect state");
         _;
     }
-    
 
     // Getters
     
-
     function jobCreator(uint jobID) public view returns(address) {
         return(jobs[jobID].creator);
     }
 
     function jobAmount(uint jobID) public view returns(uint) {
         return(jobs[jobID].amount);
+    }
+
+    function jobRemainder(uint jobID) public view returns(uint) {
+        return(jobs[jobID].eventsRemainder);
+    }
+
+    function jobRefreshRate(uint jobID) public view returns(uint) {
+        return(jobs[jobID].refreshRate);
+    }
+
+    function jobEventStreamIDs(uint jobID) public view returns(uint64[] memory) {
+        return(jobs[jobID].eventStreamIDs);
     }
 
     function jobCreatorSignature(uint jobID) public view returns(bool) {
@@ -113,80 +116,87 @@ contract PaymentFactory {
         return(jobs[jobID].workSubmitted);
     }
 
-    function jobEventStream(uint jobID) public view returns(EventStream memory) {
-        return(jobs[jobID].eventStream);
-    }
-
     function jobState(uint jobID) public view returns(State) {
         return(jobs[jobID].state);
     }
 
-    function streamBatch(uint jobID) public view returns(string[] memory) {
-        return((jobs[jobID].eventStream).batches);
+    function streamDescriptor(uint streamID) public view returns(string memory) {
+        return(eventStreams[streamID].descriptor);
     }
 
-    function streamCadence(uint jobID) public view returns(uint8) {
-        return((jobs[jobID].eventStream).refreshCadence);
+    function streamCIDs(uint streamID) public view returns(string[] memory) {
+        return(eventStreams[streamID].cid);
     }
-
 
     // Public functions
-
-
-    /**
-     * @notice Creates a specific event stream
-     * @dev Need a create batch function
-     * @dev Should it be a string array or a bytes/bytes32 array?
-     * @param _batches List of event batches
-     * @param _refreshCadence Number of events before triggering a payment refresh
-    **/
-    function _createEventStream(string[] memory _batches, uint8 _refreshCadence) private returns(EventStream memory) {
-        emit EventStreamCreated(_batches, _refreshCadence);
-        return EventStream({
-            batches: _batches,
-            refreshCadence: _refreshCadence
-            });
-    }
     
     /**
      * @notice A new job is created with the terms set by the job creator
      * @dev Look into mediation and whether or not names/descs should be held in the backend
      * @param _initAmount The initial amount that is staked by the job creator
+     * @param _refreshRate Number of events before triggering a payment refresh
      **/
-    function createJob(uint _initAmount, string[] memory _batches, uint8 _refreshCadence) public {
+    function createJob(uint _initAmount, uint _refreshRate) public  {
+        uint64[] memory _eventStreamIDs;
         jobs.push(Job({
             creator: msg.sender,
             amount: _initAmount,
+            eventsRemainder: 0,
+            refreshRate: _refreshRate,
+            eventStreamIDs: _eventStreamIDs,
             creatorSigned: false,
             applicantSigned: false,
             workSubmitted: false,
-            eventStream: _createEventStream(_batches, _refreshCadence),
-            state: State.Open
+            state: State.Closed
         }));
         uint jobID = jobs.length - 1;
-        emit JobCreated(msg.sender, _initAmount, jobID);
+        emit JobCreated(msg.sender, _initAmount, _refreshRate, jobID);
     }
 
-    // Maybe allow adding of batches in any state? Does leave open to possible errors
-    function addBatch(string memory batchHash, uint jobID) public auth(jobs[jobID].creator) inState(State.Open, jobID) {
-        
+    /**
+     * @notice Creates a new event stream
+     * @dev Check
+     * @param _descriptor A generic description of the event stream
+     * @param _cid A list of filecoin CIDs
+    **/
+    function createEventStream(string memory _descriptor, string[] memory _cid) public {
+        eventStreams.push(EventStream({
+            descriptor: _descriptor,
+            cid: _cid
+        }));
+        uint streamID = eventStreams.length - 1;
+        emit EventStreamCreated(_descriptor, streamID);
     }
 
-    function changeRefreshRate(uint8 newRefreshCadence, uint jobID) public auth(jobs[jobID].creator) inState(State.Open, jobID) {
-        require(newRefreshCadence > 0, "Refresh rate needs to be greater than 0.");
-        (jobs[jobID].eventStream).refreshCadence = newRefreshCadence;
+    // Maybe allow adding in any state? Does leave open to possible errors
+    function addEventStreams(uint64[] memory newStreamIDs, uint jobID) public auth(jobs[jobID].creator) inState(State.Open, jobID) {
+        for(uint i = 0; i < newStreamIDs.length; i++) {
+            require(newStreamIDs[i] - 1 <= eventStreams.length, "Stream does not exist");
+            (jobs[jobID].eventStreamIDs).push(newStreamIDs[i]);
+        }
     }
     
     /**
-     * notice The job creator can configure the down payment before finalizing his choice of applicant
-     * dev downpayment will be confirmed during the signing process
-     * param newAmount The new down payment
-     * param jobID The ID of a specific job
+     * @notice The job creator can configure the down payment before finalizing his choice of applicant
+     * @dev downpayment will be confirmed during the signing process
+     * @param newAmount The new down payment
+     * @param jobID The ID of a specific job
      **/
     function configureAmount(uint newAmount, uint jobID) public auth(jobs[jobID].creator) inState(State.Open, jobID) {
         require(newAmount > 0);
         jobs[jobID].amount = newAmount;
         // Emit events
+    }
+
+    /**
+     * @notice Configure the refresh rate while the applicant hasn't been chosen
+     * @dev States/logic check
+     * @param newRefreshRate The new number of events before a payment refresh is triggered
+     * @param jobID The ID of a specific job
+    **/
+    function changeRefreshRate(uint8 newRefreshRate, uint jobID) public auth(jobs[jobID].creator) inState(State.Open, jobID) {
+        require(newRefreshRate > 0, "Refresh rate needs to be greater than 0.");
+        jobs[jobID].refreshRate = newRefreshRate;
     }
 
     /**
