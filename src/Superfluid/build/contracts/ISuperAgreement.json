@@ -75,18 +75,18 @@
     "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
     "exportedSymbols": {
       "ISuperAgreement": [
-        5186
+        5069
       ],
       "ISuperfluidToken": [
-        6462
+        6345
       ]
     },
-    "id": 5187,
+    "id": 5070,
     "license": "AGPLv3",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 5156,
+        "id": 5039,
         "literals": [
           "solidity",
           ">=",
@@ -99,15 +99,15 @@
       {
         "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
         "file": "./ISuperfluidToken.sol",
-        "id": 5158,
+        "id": 5041,
         "nodeType": "ImportDirective",
-        "scope": 5187,
-        "sourceUnit": 6463,
+        "scope": 5070,
+        "sourceUnit": 6346,
         "src": "62:58:22",
         "symbolAliases": [
           {
             "foreign": {
-              "id": 5157,
+              "id": 5040,
               "name": "ISuperfluidToken",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -124,46 +124,46 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 5159,
+          "id": 5042,
           "nodeType": "StructuredDocumentation",
           "src": "122:76:22",
           "text": " @title Superfluid's agreement interface.\n @author Superfluid"
         },
         "fullyImplemented": false,
-        "id": 5186,
+        "id": 5069,
         "linearizedBaseContracts": [
-          5186
+          5069
         ],
         "name": "ISuperAgreement",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
             "documentation": {
-              "id": 5160,
+              "id": 5043,
               "nodeType": "StructuredDocumentation",
               "src": "232:57:22",
               "text": " @dev Initialize the agreement contract"
             },
             "functionSelector": "8129fc1c",
-            "id": 5163,
+            "id": 5046,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "initialize",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5161,
+              "id": 5044,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "313:2:22"
             },
             "returnParameters": {
-              "id": 5162,
+              "id": 5045,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "324:0:22"
             },
-            "scope": 5186,
+            "scope": 5069,
             "src": "294:31:22",
             "stateMutability": "nonpayable",
             "virtual": false,
@@ -171,35 +171,35 @@
           },
           {
             "documentation": {
-              "id": 5164,
+              "id": 5047,
               "nodeType": "StructuredDocumentation",
               "src": "331:60:22",
               "text": " @dev Get the type of the agreement class."
             },
             "functionSelector": "7730599e",
-            "id": 5169,
+            "id": 5052,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "agreementType",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5165,
+              "id": 5048,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "418:2:22"
             },
             "returnParameters": {
-              "id": 5168,
+              "id": 5051,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5167,
+                  "id": 5050,
                   "mutability": "mutable",
                   "name": "",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5169,
+                  "scope": 5052,
                   "src": "444:7:22",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -208,7 +208,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 5166,
+                    "id": 5049,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "444:7:22",
@@ -222,7 +222,7 @@
               ],
               "src": "443:9:22"
             },
-            "scope": 5186,
+            "scope": 5069,
             "src": "396:57:22",
             "stateMutability": "view",
             "virtual": false,
@@ -230,44 +230,44 @@
           },
           {
             "documentation": {
-              "id": 5170,
+              "id": 5053,
               "nodeType": "StructuredDocumentation",
               "src": "459:437:22",
               "text": " @dev Calculate the real-time balance for the account of this agreement class.\n @param account Account the state belongs to\n @param time Future time used for the calculation.\n @return dynamicBalance Dynamic balance portion of real-time balance of this agreement.\n @return deposit Account deposit amount of this agreement.\n @return owedDeposit Account owed deposit amount of this agreement."
             },
             "functionSelector": "9b2e48bc",
-            "id": 5185,
+            "id": 5068,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
             "name": "realtimeBalanceOf",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 5177,
+              "id": 5060,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5172,
+                  "id": 5055,
                   "mutability": "mutable",
                   "name": "token",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5185,
+                  "scope": 5068,
                   "src": "937:22:22",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_contract$_ISuperfluidToken_$6462",
+                    "typeIdentifier": "t_contract$_ISuperfluidToken_$6345",
                     "typeString": "contract ISuperfluidToken"
                   },
                   "typeName": {
-                    "id": 5171,
+                    "id": 5054,
                     "name": "ISuperfluidToken",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 6462,
+                    "referencedDeclaration": 6345,
                     "src": "937:16:22",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_contract$_ISuperfluidToken_$6462",
+                      "typeIdentifier": "t_contract$_ISuperfluidToken_$6345",
                       "typeString": "contract ISuperfluidToken"
                     }
                   },
@@ -275,11 +275,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 5174,
+                  "id": 5057,
                   "mutability": "mutable",
                   "name": "account",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5185,
+                  "scope": 5068,
                   "src": "969:15:22",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -288,7 +288,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 5173,
+                    "id": 5056,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "969:7:22",
@@ -302,11 +302,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 5176,
+                  "id": 5059,
                   "mutability": "mutable",
                   "name": "time",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5185,
+                  "scope": 5068,
                   "src": "994:12:22",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -315,7 +315,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5175,
+                    "id": 5058,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "994:7:22",
@@ -330,16 +330,16 @@
               "src": "927:85:22"
             },
             "returnParameters": {
-              "id": 5184,
+              "id": 5067,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 5179,
+                  "id": 5062,
                   "mutability": "mutable",
                   "name": "dynamicBalance",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5185,
+                  "scope": 5068,
                   "src": "1073:21:22",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -348,7 +348,7 @@
                     "typeString": "int256"
                   },
                   "typeName": {
-                    "id": 5178,
+                    "id": 5061,
                     "name": "int256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1073:6:22",
@@ -361,11 +361,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 5181,
+                  "id": 5064,
                   "mutability": "mutable",
                   "name": "deposit",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5185,
+                  "scope": 5068,
                   "src": "1108:15:22",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -374,7 +374,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5180,
+                    "id": 5063,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1108:7:22",
@@ -387,11 +387,11 @@
                 },
                 {
                   "constant": false,
-                  "id": 5183,
+                  "id": 5066,
                   "mutability": "mutable",
                   "name": "owedDeposit",
                   "nodeType": "VariableDeclaration",
-                  "scope": 5185,
+                  "scope": 5068,
                   "src": "1137:19:22",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -400,7 +400,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 5182,
+                    "id": 5065,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1137:7:22",
@@ -414,14 +414,14 @@
               ],
               "src": "1059:107:22"
             },
-            "scope": 5186,
+            "scope": 5069,
             "src": "901:266:22",
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           }
         ],
-        "scope": 5187,
+        "scope": 5070,
         "src": "199:971:22"
       }
     ],
@@ -432,10 +432,10 @@
       "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
       "exportedSymbols": {
         "ISuperAgreement": [
-          5186
+          5069
         ],
         "ISuperfluidToken": [
-          6462
+          6345
         ]
       },
       "license": "AGPLv3"
@@ -450,16 +450,16 @@
             ".0"
           ]
         },
-        "id": 5156,
+        "id": 5039,
         "name": "PragmaDirective",
         "src": "35:25:22"
       },
       {
         "attributes": {
-          "SourceUnit": 6463,
+          "SourceUnit": 6346,
           "absolutePath": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
           "file": "./ISuperfluidToken.sol",
-          "scope": 5187,
+          "scope": 5070,
           "symbolAliases": [
             {
               "foreign": {
@@ -469,7 +469,7 @@
                   ],
                   "value": "ISuperfluidToken"
                 },
-                "id": 5157,
+                "id": 5040,
                 "name": "Identifier",
                 "src": "71:16:22"
               }
@@ -477,7 +477,7 @@
           ],
           "unitAlias": ""
         },
-        "id": 5158,
+        "id": 5041,
         "name": "ImportDirective",
         "src": "62:58:22"
       },
@@ -493,17 +493,17 @@
           "contractKind": "interface",
           "fullyImplemented": false,
           "linearizedBaseContracts": [
-            5186
+            5069
           ],
           "name": "ISuperAgreement",
-          "scope": 5187
+          "scope": 5070
         },
         "children": [
           {
             "attributes": {
               "text": " @title Superfluid's agreement interface.\n @author Superfluid"
             },
-            "id": 5159,
+            "id": 5042,
             "name": "StructuredDocumentation",
             "src": "122:76:22"
           },
@@ -517,7 +517,7 @@
                 null
               ],
               "name": "initialize",
-              "scope": 5186,
+              "scope": 5069,
               "stateMutability": "nonpayable",
               "virtual": false,
               "visibility": "external"
@@ -527,7 +527,7 @@
                 "attributes": {
                   "text": " @dev Initialize the agreement contract"
                 },
-                "id": 5160,
+                "id": 5043,
                 "name": "StructuredDocumentation",
                 "src": "232:57:22"
               },
@@ -538,7 +538,7 @@
                   ]
                 },
                 "children": [],
-                "id": 5161,
+                "id": 5044,
                 "name": "ParameterList",
                 "src": "313:2:22"
               },
@@ -549,12 +549,12 @@
                   ]
                 },
                 "children": [],
-                "id": 5162,
+                "id": 5045,
                 "name": "ParameterList",
                 "src": "324:0:22"
               }
             ],
-            "id": 5163,
+            "id": 5046,
             "name": "FunctionDefinition",
             "src": "294:31:22"
           },
@@ -568,7 +568,7 @@
                 null
               ],
               "name": "agreementType",
-              "scope": 5186,
+              "scope": 5069,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -578,7 +578,7 @@
                 "attributes": {
                   "text": " @dev Get the type of the agreement class."
                 },
-                "id": 5164,
+                "id": 5047,
                 "name": "StructuredDocumentation",
                 "src": "331:60:22"
               },
@@ -589,7 +589,7 @@
                   ]
                 },
                 "children": [],
-                "id": 5165,
+                "id": 5048,
                 "name": "ParameterList",
                 "src": "418:2:22"
               },
@@ -600,7 +600,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "",
-                      "scope": 5169,
+                      "scope": 5052,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "bytes32",
@@ -612,22 +612,22 @@
                           "name": "bytes32",
                           "type": "bytes32"
                         },
-                        "id": 5166,
+                        "id": 5049,
                         "name": "ElementaryTypeName",
                         "src": "444:7:22"
                       }
                     ],
-                    "id": 5167,
+                    "id": 5050,
                     "name": "VariableDeclaration",
                     "src": "444:7:22"
                   }
                 ],
-                "id": 5168,
+                "id": 5051,
                 "name": "ParameterList",
                 "src": "443:9:22"
               }
             ],
-            "id": 5169,
+            "id": 5052,
             "name": "FunctionDefinition",
             "src": "396:57:22"
           },
@@ -641,7 +641,7 @@
                 null
               ],
               "name": "realtimeBalanceOf",
-              "scope": 5186,
+              "scope": 5069,
               "stateMutability": "view",
               "virtual": false,
               "visibility": "external"
@@ -651,7 +651,7 @@
                 "attributes": {
                   "text": " @dev Calculate the real-time balance for the account of this agreement class.\n @param account Account the state belongs to\n @param time Future time used for the calculation.\n @return dynamicBalance Dynamic balance portion of real-time balance of this agreement.\n @return deposit Account deposit amount of this agreement.\n @return owedDeposit Account owed deposit amount of this agreement."
                 },
-                "id": 5170,
+                "id": 5053,
                 "name": "StructuredDocumentation",
                 "src": "459:437:22"
               },
@@ -662,7 +662,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "token",
-                      "scope": 5185,
+                      "scope": 5068,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "contract ISuperfluidToken",
@@ -672,15 +672,15 @@
                       {
                         "attributes": {
                           "name": "ISuperfluidToken",
-                          "referencedDeclaration": 6462,
+                          "referencedDeclaration": 6345,
                           "type": "contract ISuperfluidToken"
                         },
-                        "id": 5171,
+                        "id": 5054,
                         "name": "UserDefinedTypeName",
                         "src": "937:16:22"
                       }
                     ],
-                    "id": 5172,
+                    "id": 5055,
                     "name": "VariableDeclaration",
                     "src": "937:22:22"
                   },
@@ -689,7 +689,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "account",
-                      "scope": 5185,
+                      "scope": 5068,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "address",
@@ -702,12 +702,12 @@
                           "stateMutability": "nonpayable",
                           "type": "address"
                         },
-                        "id": 5173,
+                        "id": 5056,
                         "name": "ElementaryTypeName",
                         "src": "969:7:22"
                       }
                     ],
-                    "id": 5174,
+                    "id": 5057,
                     "name": "VariableDeclaration",
                     "src": "969:15:22"
                   },
@@ -716,7 +716,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "time",
-                      "scope": 5185,
+                      "scope": 5068,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -728,17 +728,17 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 5175,
+                        "id": 5058,
                         "name": "ElementaryTypeName",
                         "src": "994:7:22"
                       }
                     ],
-                    "id": 5176,
+                    "id": 5059,
                     "name": "VariableDeclaration",
                     "src": "994:12:22"
                   }
                 ],
-                "id": 5177,
+                "id": 5060,
                 "name": "ParameterList",
                 "src": "927:85:22"
               },
@@ -749,7 +749,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "dynamicBalance",
-                      "scope": 5185,
+                      "scope": 5068,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "int256",
@@ -761,12 +761,12 @@
                           "name": "int256",
                           "type": "int256"
                         },
-                        "id": 5178,
+                        "id": 5061,
                         "name": "ElementaryTypeName",
                         "src": "1073:6:22"
                       }
                     ],
-                    "id": 5179,
+                    "id": 5062,
                     "name": "VariableDeclaration",
                     "src": "1073:21:22"
                   },
@@ -775,7 +775,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "deposit",
-                      "scope": 5185,
+                      "scope": 5068,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -787,12 +787,12 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 5180,
+                        "id": 5063,
                         "name": "ElementaryTypeName",
                         "src": "1108:7:22"
                       }
                     ],
-                    "id": 5181,
+                    "id": 5064,
                     "name": "VariableDeclaration",
                     "src": "1108:15:22"
                   },
@@ -801,7 +801,7 @@
                       "constant": false,
                       "mutability": "mutable",
                       "name": "owedDeposit",
-                      "scope": 5185,
+                      "scope": 5068,
                       "stateVariable": false,
                       "storageLocation": "default",
                       "type": "uint256",
@@ -813,32 +813,32 @@
                           "name": "uint256",
                           "type": "uint256"
                         },
-                        "id": 5182,
+                        "id": 5065,
                         "name": "ElementaryTypeName",
                         "src": "1137:7:22"
                       }
                     ],
-                    "id": 5183,
+                    "id": 5066,
                     "name": "VariableDeclaration",
                     "src": "1137:19:22"
                   }
                 ],
-                "id": 5184,
+                "id": 5067,
                 "name": "ParameterList",
                 "src": "1059:107:22"
               }
             ],
-            "id": 5185,
+            "id": 5068,
             "name": "FunctionDefinition",
             "src": "901:266:22"
           }
         ],
-        "id": 5186,
+        "id": 5069,
         "name": "ContractDefinition",
         "src": "199:971:22"
       }
     ],
-    "id": 5187,
+    "id": 5070,
     "name": "SourceUnit",
     "src": "35:1136:22"
   },
@@ -848,7 +848,7 @@
   },
   "networks": {},
   "schemaVersion": "3.3.4",
-  "updatedAt": "2021-08-06T00:15:23.898Z",
+  "updatedAt": "2021-08-07T04:47:13.219Z",
   "devdoc": {
     "author": "Superfluid",
     "kind": "dev",

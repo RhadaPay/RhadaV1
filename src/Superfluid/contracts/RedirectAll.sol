@@ -21,7 +21,6 @@ contract RedirectAll is SuperAppBase {
     event FlowUpdated(int96 inFlow, int96 outflow, int96 refundFlow);
     event NewAgreement(address sender, address receiver);
 
-
     constructor(
         ISuperfluid host,
         IConstantFlowAgreementV1 cfa,
@@ -54,7 +53,7 @@ contract RedirectAll is SuperAppBase {
         _host.registerApp(configWord);
     }
 
-    //Should have a restricted role
+    //Should have a restricted access
     function updateAllowedFlow(int96 newValue) public {
         if (newValue == _allowedFlow) return;
 
@@ -64,57 +63,47 @@ contract RedirectAll is SuperAppBase {
             _acceptedToken,
             _sender,
             address(this)
-        ); // CHECK: unclear what happens if flow doesn't exist.
-
+        );
         (, int96 outFlowRate, , ) = _cfa.getFlow(
             _acceptedToken,
             address(this),
             _receiver
-        ); // CHECK: unclear what happens if flow doesn't exist.
-
+        );
         (, int96 refundFlowRate, , ) = _cfa.getFlow(
             _acceptedToken,
             address(this),
             _sender
-        ); // CHECK: unclear what happens if flow doesn't exist.
+        );
 
         int96 newRefundFlow = 0;
         int96 newOutFlow = inFlowRate;
 
-        // @dev If inFlowRate === 0, then delete existing flow.
-        if (inFlowRate == int96(0)) {
+        //delete existing flows
+        if (outFlowRate != 0) {
             deleteFlow(_receiver);
-            if (refundFlowRate != int96(0)) {
-                deleteFlow(_sender);
-            }
-        } else {
+        }
+
+        if (refundFlowRate != 0) {
+            deleteFlow(_sender);
+        }
+
+        // Create flow
+        if (inFlowRate > 0) {
             if (inFlowRate > _allowedFlow) {
                 newRefundFlow = inFlowRate - _allowedFlow;
                 newOutFlow -= newRefundFlow;
             }
 
-            if (outFlowRate > 0) {
-                updateFlow(_receiver, newOutFlow);
-            } else {
+            if (newOutFlow > 0) {
                 createFlow(_receiver, newOutFlow);
             }
 
             if (newRefundFlow > 0) {
-                if (refundFlowRate > 0) {
-                    updateFlow(_sender, newRefundFlow);
-                } else {
-                    createFlow(_sender, newRefundFlow);
-                }
-            } else {
-                //Refund needs to be cancelled
-                if (refundFlowRate > 0) {
-                    deleteFlow(_sender);
-                }
+                createFlow(_sender, newRefundFlow);
             }
         }
         emit FlowUpdated(inFlowRate, newOutFlow, newRefundFlow);
     }
-
 
     /**************************************************************************
      * Redirect Logic
@@ -138,7 +127,6 @@ contract RedirectAll is SuperAppBase {
             receiver = _receiver;
         }
     }
-
 
     /**************************************************************************
      * Utiliy methods for Superfluid
@@ -270,39 +258,31 @@ contract RedirectAll is SuperAppBase {
         int96 newRefundFlow = 0;
         int96 newOutFlow = inFlowRate;
 
-        // @dev If inFlowRate === 0, then delete existing flow.
-        if (inFlowRate == int96(0)) {
+        //delete existing flows
+        if (outFlowRate != 0) {
             newCtx = deleteFlowWithCtx(_receiver, newCtx);
-            if (refundFlowRate != int96(0)) {
-                newCtx = deleteFlowWithCtx(_sender, newCtx);
-            }
-        } else {
-            
+        }
+
+        if (refundFlowRate != 0) {
+            newCtx = deleteFlowWithCtx(_sender, newCtx);
+        }
+
+        // Create flow
+        if (inFlowRate > 0) {
             if (inFlowRate > _allowedFlow) {
                 newRefundFlow = inFlowRate - _allowedFlow;
-                newOutFlow -=  newRefundFlow;
+                newOutFlow -= newRefundFlow;
             }
 
-
-            if (outFlowRate > 0) {
-                newCtx = updateFlowWithCtx(_receiver, newOutFlow, newCtx);
-            } else {
+            if (newOutFlow > 0) {
                 newCtx = createFlowWithCtx(_receiver, newOutFlow, newCtx);
             }
 
             if (newRefundFlow > 0) {
-                if (refundFlowRate > 0) {
-                    newCtx = updateFlowWithCtx(_sender, newRefundFlow, newCtx);
-                } else {
-                    newCtx = createFlowWithCtx(_sender, newRefundFlow, newCtx);
-                }
-            } else {
-                //Refund needs to be cancelled
-                if (refundFlowRate > 0) {
-                    newCtx = deleteFlowWithCtx(_sender, newCtx);
-                }
+                newCtx = createFlowWithCtx(_sender, newRefundFlow, newCtx);
             }
         }
+
         emit FlowUpdated(inFlowRate, newOutFlow, newRefundFlow);
     }
 
@@ -315,37 +295,20 @@ contract RedirectAll is SuperAppBase {
             "New receiver can not be a superApp"
         );
         if (newReceiver == _receiver) return;
-        // @dev delete flow to old receiver
         (, int96 outFlowRate, , ) = _cfa.getFlow(
             _acceptedToken,
             address(this),
             _receiver
-        ); //CHECK: unclear what happens if flow doesn't exist.
+        );
+
         if (outFlowRate > 0) {
-            _host.callAgreement(
-                _cfa,
-                abi.encodeWithSelector(
-                    _cfa.deleteFlow.selector,
-                    _acceptedToken,
-                    address(this),
-                    _receiver,
-                    new bytes(0)
-                ),
-                "0x"
-            );
+            // @dev delete flow to old receiver
+            deleteFlow(_receiver);
+
             // @dev create flow to new receiver
-            _host.callAgreement(
-                _cfa,
-                abi.encodeWithSelector(
-                    _cfa.createFlow.selector,
-                    _acceptedToken,
-                    newReceiver,
-                    outFlowRate,
-                    new bytes(0)
-                ),
-                "0x"
-            );
+            createFlow(newReceiver, outFlowRate);
         }
+        
         // @dev set global receiver to new receiver
         _receiver = newReceiver;
 
@@ -371,7 +334,10 @@ contract RedirectAll is SuperAppBase {
         returns (bytes memory newCtx)
     {
         //Only consider flows from the sender
-        (address flowSender, address flowReceiver ) = abi.decode(agreementData, (address, address));
+        (address flowSender, address flowReceiver) = abi.decode(
+            agreementData,
+            (address, address)
+        );
         emit NewAgreement(flowSender, flowReceiver);
 
         if (flowSender == _sender) {
@@ -396,7 +362,10 @@ contract RedirectAll is SuperAppBase {
         returns (bytes memory newCtx)
     {
         //Only consider flows from the sender
-        (address flowSender, address flowReceiver ) = abi.decode(agreementData, (address, address));
+        (address flowSender, address flowReceiver) = abi.decode(
+            agreementData,
+            (address, address)
+        );
         emit NewAgreement(flowSender, flowReceiver);
 
         if (flowSender == _sender) {
@@ -419,9 +388,12 @@ contract RedirectAll is SuperAppBase {
         if (!_isSameToken(_superToken) || !_isCFAv1(_agreementClass))
             return _ctx;
         //Only consider flows from the sender
-        (address flowSender, address flowReceiver ) = abi.decode(agreementData, (address, address));
+        (address flowSender, address flowReceiver) = abi.decode(
+            agreementData,
+            (address, address)
+        );
         emit NewAgreement(flowSender, flowReceiver);
-        
+
         if (flowSender == _sender) {
             return _updateOutflow(_ctx);
         } else {

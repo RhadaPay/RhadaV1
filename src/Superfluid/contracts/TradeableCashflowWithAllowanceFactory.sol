@@ -23,34 +23,18 @@ contract TradeableCashflowWithAllowanceFactory {
         _acceptedToken = acceptedToken;
     }
 
-    //TODO: refactor
-    function createFlow(address recipient, int96 amount) internal {
-        _host.callAgreement(
-            _cfa,
-            abi.encodeWithSelector(
-                _cfa.createFlow.selector,
-                _acceptedToken,
-                recipient,
-                amount,
-                new bytes(0) // placeholder
-            ),
-            "0x"
-        );
-    }
 
     function createNewCashflow(
         address recipient,
         string memory name,
         string memory symbol,
         uint256 jobId,
-        //int96 maxFlow,
         int96 allowedFlow
     ) public {
         require(cashflowsRecipient[jobId] == address(0), "JobId already used");
         TradeableCashflowWithAllowance newFlow = new TradeableCashflowWithAllowance(recipient, name, symbol, allowedFlow, msg.sender, _host, _cfa, _acceptedToken);
         cashflowsRecipient[jobId] = address(newFlow);
         cashflowsSender[jobId] = msg.sender;
-        //createFlow(address(newFlow), maxFlow);
         emit NewCashFlow(jobId, address(newFlow), msg.sender);
     }
  
