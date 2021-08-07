@@ -105,8 +105,51 @@ contract PaymentFactory {
         require(jobs[jobID].state == _state, "Incorrect state");
         _;
     }
-        
+    
+
+    // Getters
+    
+
+    function jobCreator(uint jobID) public view returns(address) {
+        return(jobs[jobID].creator);
+    }
+
+    function jobAmount(uint jobID) public view returns(uint) {
+        return(jobs[jobID].amount);
+    }
+
+    function jobCreatorSignature(uint jobID) public view returns(bool) {
+        return(jobs[jobID].creatorSigned);
+    }
+
+    function jobApplicantSignature(uint jobID) public view returns(bool) {
+        return(jobs[jobID].applicantSigned);
+    }
+
+    function jobWorkSubmitted(uint jobID) public view returns(bool) {
+        return(jobs[jobID].workSubmitted);
+    }
+
+    function jobEventStream(uint jobID) public view returns(EventStream memory) {
+        return(jobs[jobID].eventStream);
+    }
+
+    function jobState(uint jobID) public view returns(State) {
+        return(jobs[jobID].state);
+    }
+
+    function streamBatch(uint jobID) public view returns(string[] memory) {
+        return((jobs[jobID].eventStream).batches);
+    }
+
+    function streamCadence(uint jobID) public view returns(uint8) {
+        return((jobs[jobID].eventStream).refreshCadence);
+    }
+
+
     // Public functions
+
+
     /**
      * @notice Creates a specific event stream
      * @dev Need a create batch function
@@ -120,7 +163,6 @@ contract PaymentFactory {
             batches: _batches,
             refreshCadence: _refreshCadence
             });
-        
     }
     
     /**

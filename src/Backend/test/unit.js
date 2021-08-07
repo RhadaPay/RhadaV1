@@ -9,8 +9,6 @@ describe("Payment Factory", function () {
     let seller1;
     let seller2;
     let seller3;
-    let job1;
-    let job2;
 
     before(async function () {
         PaymentFactory = await ethers.getContractFactory("PaymentFactory");
@@ -24,9 +22,11 @@ describe("Payment Factory", function () {
     });
 
     describe("Create job", function () {
-        it("Should create a new job with jobID 0") {
-            factory.createJob(1000, )
-        }
+        it("New job should have jobID 0", async function () {
+            let _batches = ["0", "1", "2"];
+            //const job1 = await factory.connect(buyer1).createJob(1000, _batches, 10);
+            //expect(factory.jobs[0]).to.equal(job1);
+        });
     });
 
 

@@ -2,11 +2,11 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/mnt/c/users/ksilv/onedrive/documents/github/rhada/rhadav1/src/backend/contracts/PaymentFactory.sol": {
-      "lastModificationDate": 1628284384098,
-      "contentHash": "d0529c75a96775978769cdd7527f2999",
+      "lastModificationDate": 1628306039937,
+      "contentHash": "979558ebe78bc9a84355e6612cabd95c",
       "sourceName": "contracts/PaymentFactory.sol",
       "solcConfig": {
-        "version": "0.7.3",
+        "version": "0.7.1",
         "settings": {
           "optimizer": {
             "enabled": false,
