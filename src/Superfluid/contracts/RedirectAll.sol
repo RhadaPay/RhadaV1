@@ -16,6 +16,8 @@ contract RedirectAll is SuperAppBase {
     address public _receiver;
     address public _sender;
     int96 public _allowedFlow;
+    int96 public _maxAllowedFlow;
+    uint256 public _deadline;
 
     event ReceiverChanged(address receiver);
     event FlowUpdated(int96 inFlow, int96 outflow, int96 refundFlow);
@@ -27,6 +29,8 @@ contract RedirectAll is SuperAppBase {
         ISuperToken acceptedToken,
         address receiver,
         int96 allowedFlow,
+        int96 maxAllowedFlow,
+        uint256 deadline,
         address sender
     ) {
         require(address(host) != address(0), "host is zero address");
@@ -37,6 +41,8 @@ contract RedirectAll is SuperAppBase {
         );
         require(address(receiver) != address(0), "receiver is zero address");
         require(!host.isApp(ISuperApp(receiver)), "receiver is an app");
+        require(allowedFlow <= maxAllowedFlow, "_maxAllowedFlow overflow" );
+
 
         _host = host;
         _cfa = cfa;
@@ -44,6 +50,8 @@ contract RedirectAll is SuperAppBase {
         _receiver = receiver;
         _sender = sender;
         _allowedFlow = allowedFlow;
+        _maxAllowedFlow = maxAllowedFlow;
+        _deadline = deadline;
 
         uint256 configWord = SuperAppDefinitions.APP_LEVEL_FINAL |
             SuperAppDefinitions.BEFORE_AGREEMENT_CREATED_NOOP |
@@ -53,9 +61,52 @@ contract RedirectAll is SuperAppBase {
         _host.registerApp(configWord);
     }
 
-    //Should have a restricted access
+    function _closeCashflow() private{
+        (, int96 inFlowRate, , ) = _cfa.getFlow(
+            _acceptedToken,
+            _sender,
+            address(this)
+        );
+        (, int96 outFlowRate, , ) = _cfa.getFlow(
+            _acceptedToken,
+            address(this),
+            _receiver
+        );
+        (, int96 refundFlowRate, , ) = _cfa.getFlow(
+            _acceptedToken,
+            address(this),
+            _sender
+        );
+
+        int96 newRefundFlow = inFlowRate;
+
+        //delete existing flows
+        if (outFlowRate != 0) {
+            deleteFlow(_receiver);
+        }
+
+        if (refundFlowRate != 0) {
+            deleteFlow(_sender);
+        }
+
+        // Create flow to refund everything to the sender
+        if (inFlowRate > 0) {
+            if (newRefundFlow > 0) {
+                createFlow(_sender, newRefundFlow);
+            }
+        }
+
+
+    }
+
+    //Should have a restricted access (onlyFactory?)
     function updateAllowedFlow(int96 newValue) public {
         if (newValue == _allowedFlow) return;
+        require(newValue <= _maxAllowedFlow, "_maxAllowedFlow overflow" );
+
+        if(block.timestamp > _deadline){
+            _closeCashflow();
+        }
 
         _allowedFlow = newValue;
 
@@ -308,7 +359,7 @@ contract RedirectAll is SuperAppBase {
             // @dev create flow to new receiver
             createFlow(newReceiver, outFlowRate);
         }
-        
+
         // @dev set global receiver to new receiver
         _receiver = newReceiver;
 

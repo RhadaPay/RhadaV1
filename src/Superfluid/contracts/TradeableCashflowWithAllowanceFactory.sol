@@ -24,17 +24,24 @@ contract TradeableCashflowWithAllowanceFactory {
     }
 
 
+    //TODO:role permission 
+    function updateCashflowAllowance(uint256 jobId, int96 newAllowance) public {
+        require(cashflowsRecipient[jobId] != address(0), "Job CashFlow doesn't exists");
+        TradeableCashflowWithAllowance(cashflowsRecipient[jobId]).updateAllowedFlow(newAllowance);
+    }
+
     function createNewCashflow(
         address recipient,
-        string memory name,
-        string memory symbol,
         uint256 jobId,
-        int96 allowedFlow
+        int96 allowedFlow,
+        int96 maxAllowedFlow,
+        uint256 deadline
     ) public {
         require(cashflowsRecipient[jobId] == address(0), "JobId already used");
-        TradeableCashflowWithAllowance newFlow = new TradeableCashflowWithAllowance(recipient, name, symbol, allowedFlow, msg.sender, _host, _cfa, _acceptedToken);
+        TradeableCashflowWithAllowance newFlow = new TradeableCashflowWithAllowance(recipient, allowedFlow, maxAllowedFlow, deadline, msg.sender, _host, _cfa, _acceptedToken);
         cashflowsRecipient[jobId] = address(newFlow);
         cashflowsSender[jobId] = msg.sender;
+        //TODO: transfer money from msg.sender to address(newFlow)
         emit NewCashFlow(jobId, address(newFlow), msg.sender);
     }
  
