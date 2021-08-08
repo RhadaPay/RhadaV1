@@ -4,15 +4,11 @@ import '@typechain/hardhat';
 import fs from "fs";
 
 const privateKey =  fs.readFileSync(".env").toString().trim();
-
-// You need to export an object to set up your config
-// Go to https://hardhat.org/config/ to learn more
-
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
 module.exports = {
-  defaultNetwork: "matic",
+  defaultNetwork: "hardhat",
   networks: {
     hardhat: {
     },
@@ -31,10 +27,10 @@ module.exports = {
     }
   },
   paths: {
-    sources: "./src/Backend/Contracts",
-    tests: "./src/Backend/test",
-    cache: "./src/Backend/cache",
-    artifacts: "./src/Backend/Contracts/artifacts"
+    sources: "./Contracts",
+    tests: "./test",
+    cache: "./cache",
+    artifacts: "./artifacts"
   },
   mocha: {
     timeout: 20000

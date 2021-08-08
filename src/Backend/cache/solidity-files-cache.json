@@ -1,0 +1,73 @@
+{
+  "_format": "hh-sol-cache-2",
+  "files": {
+    "C:\\Users\\accelerate\\SynologyDrive\\Software Development\\Current\\Projects\\hackfs\\smart-contracts\\src\\Backend\\contracts\\PaymentFactory.sol": {
+      "lastModificationDate": 1628404065513,
+      "contentHash": "d92d94be4024a6734fb53b143a908177",
+      "sourceName": "contracts/PaymentFactory.sol",
+      "solcConfig": {
+        "version": "0.7.1",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.1"
+      ],
+      "artifacts": [
+        "PaymentFactory"
+      ]
+    },
+    "C:\\Users\\accelerate\\SynologyDrive\\Software Development\\Current\\Projects\\hackfs\\smart-contracts\\src\\Backend\\Contracts\\PaymentFactory.sol": {
+      "lastModificationDate": 1628419665778,
+      "contentHash": "4fdc7e06c5af9d54163dd09911c9bc92",
+      "sourceName": "Contracts/PaymentFactory.sol",
+      "solcConfig": {
+        "version": "0.7.1",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 200
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.1"
+      ],
+      "artifacts": [
+        "PaymentFactory"
+      ]
+    }
+  }
+}

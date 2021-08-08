@@ -1,0 +1,50 @@
+Here are the major changes and rationale:
+
+Solidity:
+-- Removed unneccessary getters:
+  You can just call 
+  
+  const job = await factory.jobs(jobId);
+  job.amount // etc...
+  
+  Instead of using getters.
+
+-- Added getters for total arrays
+  Dynamic arrays are not retrivable by default in solidity, so we have 
+  to write getters for them, added for jobs and eventstreams
+
+-- Made Jobs have only a single eventStreamId
+  I was having to write dozens of extra lines of code to deal with the Nested
+  array, so to save on time, I've just created a single uint eventStreamId to be
+  associated with the job. See this as a temp measure.
+
+-- Made jobs instantiate an eventStreamId on creation
+  Every job now needs an eventStreamId, this also massively saves on code needed
+  to handle null checks.
+
+-- changed 'eventsRemainder' to 'numberOfEvents'
+  Log the total number of events recorded against the job, makes it easier
+  to check when the next refresh should be.
+
+
+-- CIDs are not added when creating eventStreams
+  this allows us to create an eventStream then add events as they appear.
+  Otherwise, we will have to point to a potentially non-existant CID
+
+
+
+Folder Structure:
+-- Config: Changed the hardhat config to point at the correct folder
+-- Nested folder removed: removed a folder that was causing test slowdown
+
+Tests:
+-- I added tests for EventStream and Job
+
+
+Static Typings:
+-- I added typescript and typechain support, you don't need to use it if
+you don't want but it saves a lot of time by adding autosuggestions.
+You can still use .js files in the same project.
+
+-- If you do want to use typescript, you can just run "npx hardhat typechain" and
+the contract will be compiled and typed so VS code can provide autosuggestions
