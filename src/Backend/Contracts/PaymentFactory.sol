@@ -63,9 +63,7 @@ contract PaymentFactory is AccessControl{
     bytes32 public constant JOB_ORACLE = keccak256("JOB_ORACLE");
     bytes32 public constant JOB_ADMIN = keccak256("JOB_ADMIN");
 
-    address cashflowFactory;
-
-
+    address public cashflowFactory;
 
     // Mappings
     mapping(uint256 => address[]) public jobToApplicants;
@@ -127,7 +125,7 @@ contract PaymentFactory is AccessControl{
 
 
     /**
-     * @notice Increase the cashflow allowance according to the job percentage 
+     * @notice Increase the cashflow allowance of a job according to a percentage 
      * @dev Can only be called by an address with job oracle role
      * @param jobId The ID of a specific job
      * @param eventsRecorded Number of events recorded to update

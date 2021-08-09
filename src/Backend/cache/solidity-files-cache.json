@@ -44,8 +44,8 @@
       ]
     },
     "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/PaymentFactory.sol": {
-      "lastModificationDate": 1628480928505,
-      "contentHash": "9ffee234b74f13e0d794b30ac84cddd6",
+      "lastModificationDate": 1628483192275,
+      "contentHash": "091f869e3bb9015d8cf13989ffc2cc56",
       "sourceName": "Contracts/PaymentFactory.sol",
       "solcConfig": {
         "version": "0.7.6",

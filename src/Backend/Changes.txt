@@ -48,3 +48,27 @@ You can still use .js files in the same project.
 
 -- If you do want to use typescript, you can just run "npx hardhat typechain" and
 the contract will be compiled and typed so VS code can provide autosuggestions
+
+--------------------------------------------------------------------
+
+CHANGELOG 9/8/21
+
+- PaymentFactory couldn't inherit TradeableCashflowWithAllowanceFactory for size limitations, so I defined
+  an interface (ITradeableCashflowWithAllowanceFactory).
+
+- Both contracts store the address of the other one, this can be set in the constructor
+  or in a update function (in this way they can be deployed in any order)
+
+- Using the modifier isPaymentFactory, TradeableCashflowWithAllowanceFactory functions can
+  only be called passing from the PaymentFactory contract
+
+- increaseCashflowAllowance implemented
+
+- assetCid added to job definition and to submitWork function
+
+- Access Control: Both contracts can now limit the function usage using roles
+  Both have a  JOB_ADMIN role (the deployer is by default): only a JOB_ADMIN can change the factory addresses
+  PaymentFactory has also a JOB_ORACLE role, should be assigned to the backend accounts and prevents other accounts to 
+  call the increaseCashflowAllowance method.
+
+  
