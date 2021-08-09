@@ -1,16 +1,396 @@
 {
   "_format": "hh-sol-cache-2",
   "files": {
-    "C:\\Users\\accelerate\\SynologyDrive\\Software Development\\Current\\Projects\\hackfs\\smart-contracts\\src\\Backend\\contracts\\PaymentFactory.sol": {
-      "lastModificationDate": 1628404065513,
-      "contentHash": "d92d94be4024a6734fb53b143a908177",
-      "sourceName": "contracts/PaymentFactory.sol",
+    "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/Cashflow/RedirectAll.sol": {
+      "lastModificationDate": 1628437268055,
+      "contentHash": "c90965f58a4884f6d8ee0646a9fbcef3",
+      "sourceName": "Contracts/Cashflow/RedirectAll.sol",
       "solcConfig": {
-        "version": "0.7.1",
+        "version": "0.7.6",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+        "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+        "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.1"
+      ],
+      "artifacts": [
+        "RedirectAll"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol": {
+      "lastModificationDate": 1628437099235,
+      "contentHash": "4288d5749fd55e5324a55c755add12e5",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperfluidGovernance.sol",
+        "./ISuperfluidToken.sol",
+        "./ISuperToken.sol",
+        "./ISuperTokenFactory.sol",
+        "./ISuperAgreement.sol",
+        "./ISuperApp.sol",
+        "./Definitions.sol",
+        "../tokens/TokenInfo.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "@openzeppelin/contracts/token/ERC777/IERC777.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0"
+      ],
+      "artifacts": [
+        "ISuperfluid"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol": {
+      "lastModificationDate": 1628437099225,
+      "contentHash": "8429ab2b4e3f40a40860323c89880ee2",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/agreements/IConstantFlowAgreementV1.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../superfluid/ISuperAgreement.sol",
+        "../superfluid/ISuperfluidToken.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0"
+      ],
+      "artifacts": [
+        "IConstantFlowAgreementV1"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol": {
+      "lastModificationDate": 1628437099235,
+      "contentHash": "3e5bd2118bd7e5896f9efb80df2184aa",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/apps/SuperAppBase.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../interfaces/superfluid/ISuperfluid.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0"
+      ],
+      "artifacts": [
+        "SuperAppBase"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol": {
+      "lastModificationDate": 1628437099235,
+      "contentHash": "8f7f6500bc103961c9d8c897cb3d720e",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidGovernance.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperAgreement.sol",
+        "./ISuperToken.sol",
+        "./ISuperfluidToken.sol",
+        "./ISuperfluid.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0"
+      ],
+      "artifacts": [
+        "ISuperfluidGovernance"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol": {
+      "lastModificationDate": 1628437099235,
+      "contentHash": "0c39bdd9d2500b664cc9cefbe20142c6",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluidToken.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperAgreement.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0"
+      ],
+      "artifacts": [
+        "ISuperfluidToken"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol": {
+      "lastModificationDate": 1628437099235,
+      "contentHash": "222314b322e51d2090b3877c60b263b7",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperfluid.sol",
+        "./ISuperfluidToken.sol",
+        "../tokens/TokenInfo.sol",
+        "@openzeppelin/contracts/token/ERC777/IERC777.sol",
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0"
+      ],
+      "artifacts": [
+        "ISuperToken"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol": {
+      "lastModificationDate": 1628437099235,
+      "contentHash": "6e016499dc288027c11cb79bf0a4f99c",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperTokenFactory.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperToken.sol",
+        "../tokens/ERC20WithTokenInfo.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0"
+      ],
+      "artifacts": [
+        "ISuperTokenFactory"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol": {
+      "lastModificationDate": 1628437099235,
+      "contentHash": "b97fa63ef5ffd33cb83c453a2d3a4aa5",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperAgreement.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperfluidToken.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0"
+      ],
+      "artifacts": [
+        "ISuperAgreement"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol": {
+      "lastModificationDate": 1628437099235,
+      "contentHash": "4a7ab4f66d3c1f0928f175b31dfa5b0a",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperApp.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./ISuperToken.sol"
+      ],
+      "versionPragmas": [
+        ">=0.7.0"
+      ],
+      "artifacts": [
+        "ISuperApp"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol": {
+      "lastModificationDate": 1628437099215,
+      "contentHash": "d15bf7d1966679fa3eba9f0262909397",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/Definitions.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
           },
           "outputSelection": {
             "*": {
@@ -28,6 +408,724 @@
         }
       },
       "imports": [],
+      "versionPragmas": [
+        ">=0.7.0"
+      ],
+      "artifacts": [
+        "BatchOperation",
+        "ContextDefinitions",
+        "SuperAppDefinitions",
+        "SuperfluidGovernanceConfigs"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol": {
+      "lastModificationDate": 1628437099255,
+      "contentHash": "f1077db92299ae9ec32a5f18d174c0a5",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/TokenInfo.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "TokenInfo"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/token/ERC20/IERC20.sol": {
+      "lastModificationDate": 1628464272185,
+      "contentHash": "e0a41531d159d3a32f84b7a3ecf9fabb",
+      "sourceName": "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "IERC20"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/token/ERC777/IERC777.sol": {
+      "lastModificationDate": 1628464272195,
+      "contentHash": "5833aafefffbdbdb5f5ee567a3f51b86",
+      "sourceName": "@openzeppelin/contracts/token/ERC777/IERC777.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "IERC777"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol": {
+      "lastModificationDate": 1628437099215,
+      "contentHash": "022e0091ad1481b6f1c0f7b2c4bb3473",
+      "sourceName": "@superfluid-finance/ethereum-contracts/contracts/interfaces/tokens/ERC20WithTokenInfo.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "@openzeppelin/contracts/token/ERC20/IERC20.sol",
+        "./TokenInfo.sol"
+      ],
+      "versionPragmas": [
+        ">=0.5.0"
+      ],
+      "artifacts": [
+        "ERC20WithTokenInfo"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/Cashflow/TradeableCashflowWithAllowanceFactory.sol": {
+      "lastModificationDate": 1628467427045,
+      "contentHash": "48753c01d354cacc9823d29819edac0a",
+      "sourceName": "Contracts/Cashflow/TradeableCashflowWithAllowanceFactory.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./TradeableCashflowWithAllowance.sol",
+        "./Interfaces/ITradeableCashflowWithAllowanceFactory.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.1"
+      ],
+      "artifacts": [
+        "TradeableCashflowWithAllowanceFactory"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/Cashflow/TradeableCashflowWithAllowance.sol": {
+      "lastModificationDate": 1628469749855,
+      "contentHash": "1c2e336009db748ef47a93114fab52f1",
+      "sourceName": "Contracts/Cashflow/TradeableCashflowWithAllowance.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./RedirectAll.sol",
+        "@openzeppelin/contracts/token/ERC721/ERC721.sol"
+      ],
+      "versionPragmas": [
+        "^0.7.1"
+      ],
+      "artifacts": [
+        "TradeableCashflowWithAllowance"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol": {
+      "lastModificationDate": 1628464272185,
+      "contentHash": "eabcb7fd9472ae9ca34c07172a39f210",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/ERC721.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../utils/Context.sol",
+        "./IERC721.sol",
+        "./IERC721Metadata.sol",
+        "./IERC721Enumerable.sol",
+        "./IERC721Receiver.sol",
+        "../../introspection/ERC165.sol",
+        "../../math/SafeMath.sol",
+        "../../utils/Address.sol",
+        "../../utils/EnumerableSet.sol",
+        "../../utils/EnumerableMap.sol",
+        "../../utils/Strings.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "ERC721"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/utils/Context.sol": {
+      "lastModificationDate": 1628464272175,
+      "contentHash": "2adbd82f6d055a4751566d4671512b03",
+      "sourceName": "@openzeppelin/contracts/utils/Context.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "Context"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/token/ERC721/IERC721.sol": {
+      "lastModificationDate": 1628464272185,
+      "contentHash": "e82621b83943f11c44988c60e83d6ebc",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../../introspection/IERC165.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.2 <0.8.0"
+      ],
+      "artifacts": [
+        "IERC721"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Metadata.sol": {
+      "lastModificationDate": 1628464272185,
+      "contentHash": "370e7a48f316401b5063bcb604843e1b",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Metadata.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC721.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.2 <0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Metadata"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Enumerable.sol": {
+      "lastModificationDate": 1628464272185,
+      "contentHash": "eaebc3874248c26f6ea0b13b9a140a94",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Enumerable.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC721.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.2 <0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Enumerable"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol": {
+      "lastModificationDate": 1628464272195,
+      "contentHash": "fad0b3f4424bdbb4b35467b29ea8d334",
+      "sourceName": "@openzeppelin/contracts/token/ERC721/IERC721Receiver.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "IERC721Receiver"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/introspection/ERC165.sol": {
+      "lastModificationDate": 1628464272175,
+      "contentHash": "08f854e2dd3c262845bba38c9b48e4e0",
+      "sourceName": "@openzeppelin/contracts/introspection/ERC165.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./IERC165.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "ERC165"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/math/SafeMath.sol": {
+      "lastModificationDate": 1628464272195,
+      "contentHash": "e03e12206057e809eb76c5f681170c32",
+      "sourceName": "@openzeppelin/contracts/math/SafeMath.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "SafeMath"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/utils/Address.sol": {
+      "lastModificationDate": 1628464272175,
+      "contentHash": "7aa46886ff5abe7515496208a5e2ce5a",
+      "sourceName": "@openzeppelin/contracts/utils/Address.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.2 <0.8.0"
+      ],
+      "artifacts": [
+        "Address"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/utils/EnumerableSet.sol": {
+      "lastModificationDate": 1628464272175,
+      "contentHash": "db7b1afdb2c204e1e52100b79f0c847e",
+      "sourceName": "@openzeppelin/contracts/utils/EnumerableSet.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "EnumerableSet"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/utils/EnumerableMap.sol": {
+      "lastModificationDate": 1628464272175,
+      "contentHash": "b1bb8570824c668943149211d74d6c51",
+      "sourceName": "@openzeppelin/contracts/utils/EnumerableMap.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "EnumerableMap"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/utils/Strings.sol": {
+      "lastModificationDate": 1628464272195,
+      "contentHash": "c86a31bacf868d392eda08a0eccc4735",
+      "sourceName": "@openzeppelin/contracts/utils/Strings.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "Strings"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/introspection/IERC165.sol": {
+      "lastModificationDate": 1628464272185,
+      "contentHash": "0d62a8380952235f135dae91590f90a3",
+      "sourceName": "@openzeppelin/contracts/introspection/IERC165.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "IERC165"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/PaymentFactory.sol": {
+      "lastModificationDate": 1628469798245,
+      "contentHash": "3a6d72c40052f52a1b2ca8d8e5c5f0ed",
+      "sourceName": "Contracts/PaymentFactory.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "./Cashflow/Interfaces/ITradeableCashflowWithAllowanceFactory.sol",
+        "@openzeppelin/contracts/access/AccessControl.sol",
+        "./Utils/Int96SafeMath.sol",
+        "@openzeppelin/contracts/math/SafeMath.sol"
+      ],
       "versionPragmas": [
         "^0.7.1"
       ],
@@ -35,16 +1133,16 @@
         "PaymentFactory"
       ]
     },
-    "C:\\Users\\accelerate\\SynologyDrive\\Software Development\\Current\\Projects\\hackfs\\smart-contracts\\src\\Backend\\Contracts\\PaymentFactory.sol": {
-      "lastModificationDate": 1628419665778,
-      "contentHash": "4fdc7e06c5af9d54163dd09911c9bc92",
-      "sourceName": "Contracts/PaymentFactory.sol",
+    "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/Cashflow/Interfaces/ITradeableCashflowWithAllowanceFactory.sol": {
+      "lastModificationDate": 1628467421755,
+      "contentHash": "ae3b9e882f121c498fd2896872594337",
+      "sourceName": "Contracts/Cashflow/Interfaces/ITradeableCashflowWithAllowanceFactory.sol",
       "solcConfig": {
-        "version": "0.7.1",
+        "version": "0.7.6",
         "settings": {
           "optimizer": {
             "enabled": true,
-            "runs": 200
+            "runs": 1
           },
           "outputSelection": {
             "*": {
@@ -66,7 +1164,79 @@
         "^0.7.1"
       ],
       "artifacts": [
-        "PaymentFactory"
+        "ITradeableCashflowWithAllowanceFactory"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/node_modules/@openzeppelin/contracts/access/AccessControl.sol": {
+      "lastModificationDate": 1628464272175,
+      "contentHash": "54eb0b53c109558e8312811342e95bf0",
+      "sourceName": "@openzeppelin/contracts/access/AccessControl.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [
+        "../utils/EnumerableSet.sol",
+        "../utils/Address.sol",
+        "../utils/Context.sol"
+      ],
+      "versionPragmas": [
+        ">=0.6.0 <0.8.0"
+      ],
+      "artifacts": [
+        "AccessControl"
+      ]
+    },
+    "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/Utils/Int96SafeMath.sol": {
+      "lastModificationDate": 1628468490375,
+      "contentHash": "1c03dff05d39eeef1475b26812b74986",
+      "sourceName": "Contracts/Utils/Int96SafeMath.sol",
+      "solcConfig": {
+        "version": "0.7.6",
+        "settings": {
+          "optimizer": {
+            "enabled": true,
+            "runs": 1
+          },
+          "outputSelection": {
+            "*": {
+              "*": [
+                "abi",
+                "evm.bytecode",
+                "evm.deployedBytecode",
+                "evm.methodIdentifiers"
+              ],
+              "": [
+                "ast"
+              ]
+            }
+          }
+        }
+      },
+      "imports": [],
+      "versionPragmas": [
+        "^0.7.0"
+      ],
+      "artifacts": [
+        "Int96SafeMath"
       ]
     }
   }

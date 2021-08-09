@@ -9,7 +9,7 @@ describe("Payment Factory", function () {
 
   before(async function () {
     PaymentFactory = await ethers.getContractFactory("PaymentFactory") as PaymentFactory__factory;
-    factory = await PaymentFactory.deploy();
+    factory = await PaymentFactory.deploy("0x0000000000000000000000000000000000000000");
   });
   
   after(async () => {

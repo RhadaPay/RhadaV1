@@ -13,7 +13,7 @@ describe("Payment Factory", function () {
     before(async function () {
         PaymentFactory = await ethers.getContractFactory("PaymentFactory") as PaymentFactory__factory;
         [buyer1, seller1] = await ethers.getSigners();
-        factory = await PaymentFactory.deploy();
+        factory = await PaymentFactory.deploy("0x0000000000000000000000000000000000000000");
       });
     
     after(async () => {
@@ -23,16 +23,18 @@ describe("Payment Factory", function () {
     describe("Create jobs", () => {
         let job: Job;
         const _eventStreamId = 0;
+        const _percentage = 5;
         const newJob = {
           _initAmount: 1000,
           _refreshRate: 10,
-          _eventStreamId
+          _eventStreamId,
+          _percentage
         }
         
         before(async () => {
           await factory.createEventStream("test");
           await factory.connect(buyer1).createJob(
-            newJob._initAmount, newJob._refreshRate, newJob._eventStreamId
+            newJob._initAmount, newJob._refreshRate, newJob._eventStreamId, newJob._percentage
           );
           job = await factory.jobs(0);
         })
@@ -45,7 +47,7 @@ describe("Payment Factory", function () {
           await expect(
             factory
             .connect(buyer1)
-            .createJob(newJob._initAmount, newJob._refreshRate, 10)
+            .createJob(newJob._initAmount, newJob._refreshRate, 10, newJob._percentage)
           ).to.be.reverted;
         });
 

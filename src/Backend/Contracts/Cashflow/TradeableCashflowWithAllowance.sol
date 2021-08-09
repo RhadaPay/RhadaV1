@@ -11,15 +11,15 @@ contract TradeableCashflowWithAllowance is ERC721, RedirectAll {
         int96 maxAllowedFlow,
         uint256 deadline,
         address sender,
-        ISuperfluid host,
-        IConstantFlowAgreementV1 cfa,
-        ISuperToken acceptedToken
+        address host,
+        address cfa,
+        address acceptedToken
     )
         ERC721("JobCashflow", "JobCashflow")
         RedirectAll(
-            host,
-            cfa,
-            acceptedToken,
+            ISuperfluid(host),
+            IConstantFlowAgreementV1(cfa),
+            ISuperToken(acceptedToken),
             owner,
             allowedFlow,
             maxAllowedFlow,
