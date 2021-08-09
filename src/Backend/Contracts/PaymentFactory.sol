@@ -106,7 +106,7 @@ contract PaymentFactory is AccessControl{
         cashflowFactory = _cashflowFactory;
     }
 
-    function updateCashflowFactory(address _cashflowFactory) isJobAdmin public {
+    function updateCashflowFactoryAddress(address _cashflowFactory) isJobAdmin public {
         cashflowFactory = _cashflowFactory;
     }
 

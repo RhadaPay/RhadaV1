@@ -1,20 +1,23 @@
 import "@nomiclabs/hardhat-waffle";
 import "@nomiclabs/hardhat-ethers";
 import '@typechain/hardhat';
-import fs from "fs";
 
-const privateKey =  fs.readFileSync(".env").toString().trim();
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
-module.exports = {
+require("dotenv").config();
+
+import 'hardhat-deploy';
+
+import { HardhatUserConfig } from "hardhat/config";
+
+
+const config: HardhatUserConfig =  {
   defaultNetwork: "hardhat",
   networks: {
     hardhat: {
     },
-    matic: {
-      url: "https://rpc-mumbai.maticvigil.com",
-      accounts: [privateKey]
+    mumbai: {
+      url: process.env.MUMBAI_RPC,
+      chainId: 80001,
+      accounts: [ process.env.PRIVATE_KEY as string]
     }
   },
   solidity: {
@@ -34,5 +37,19 @@ module.exports = {
   },
   mocha: {
     timeout: 20000
-  }
+  },
+  namedAccounts: {
+    deployer: 0,
+    host: {
+      "mumbai": '0xEB796bdb90fFA0f28255275e16936D25d3418603'
+    },
+    cfa: {
+      "mumbai": '0x49e565Ed1bdc17F3d220f72DF0857C26FA83F873'
+    },
+    acceptedToken: {
+      "mumbai": '0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f'
+    }
+  },
 };
+
+export default config;

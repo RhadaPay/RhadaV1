@@ -11,14 +11,21 @@
     "@types/node": "^16.4.3",
     "chai": "^4.3.4",
     "ethereum-waffle": "^3.4.0",
-    "ethers": "^5.4.2",
+    "ethers": "^5.4.4",
     "hardhat": "^2.5.0",
+    "hardhat-deploy": "^0.8.11",
     "ts-node": "^10.1.0",
     "typechain": "^5.1.2",
     "typescript": "^4.3.5"
   },
+  "scripts": {
+    "compile": "npx hardhat compile",
+    "test": "npx hardhat test",
+    "deploy-mumbai": "npx hardhat deploy --network mumbai"
+  },
   "dependencies": {
     "@openzeppelin/contracts": "^3.4.0",
-    "@superfluid-finance/ethereum-contracts": "*"
+    "@superfluid-finance/ethereum-contracts": "*",
+    "dotenv": "^10.0.0"
   }
 }
