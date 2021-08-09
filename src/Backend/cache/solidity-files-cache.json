@@ -2,8 +2,8 @@
   "_format": "hh-sol-cache-2",
   "files": {
     "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/Cashflow/Interfaces/ITradeableCashflowWithAllowanceFactory.sol": {
-      "lastModificationDate": 1628467421755,
-      "contentHash": "ae3b9e882f121c498fd2896872594337",
+      "lastModificationDate": 1628480471985,
+      "contentHash": "32ec75d20961496c7eb65efc1485ebc1",
       "sourceName": "Contracts/Cashflow/Interfaces/ITradeableCashflowWithAllowanceFactory.sol",
       "solcConfig": {
         "version": "0.7.6",
@@ -44,8 +44,8 @@
       ]
     },
     "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/PaymentFactory.sol": {
-      "lastModificationDate": 1628470816365,
-      "contentHash": "48d1300264832efa78cfd4d4e9ec9b83",
+      "lastModificationDate": 1628480928505,
+      "contentHash": "9ffee234b74f13e0d794b30ac84cddd6",
       "sourceName": "Contracts/PaymentFactory.sol",
       "solcConfig": {
         "version": "0.7.6",
@@ -81,7 +81,8 @@
         "./Cashflow/Interfaces/ITradeableCashflowWithAllowanceFactory.sol",
         "@openzeppelin/contracts/access/AccessControl.sol",
         "./Utils/Int96SafeMath.sol",
-        "@openzeppelin/contracts/math/SafeMath.sol"
+        "@openzeppelin/contracts/math/SafeMath.sol",
+        "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol"
       ],
       "versionPragmas": [
         "^0.7.1"
@@ -745,8 +746,8 @@
       ]
     },
     "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/Cashflow/TradeableCashflowWithAllowanceFactory.sol": {
-      "lastModificationDate": 1628467427045,
-      "contentHash": "48753c01d354cacc9823d29819edac0a",
+      "lastModificationDate": 1628480528365,
+      "contentHash": "98e4b2f58c06fc55bdaa172ab5f4be31",
       "sourceName": "Contracts/Cashflow/TradeableCashflowWithAllowanceFactory.sol",
       "solcConfig": {
         "version": "0.7.6",

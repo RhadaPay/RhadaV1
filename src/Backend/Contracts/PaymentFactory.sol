@@ -7,6 +7,7 @@ import "@openzeppelin/contracts/access/AccessControl.sol";
 import "./Utils/Int96SafeMath.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
+import {ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
 
 
 
@@ -119,9 +120,9 @@ contract PaymentFactory is AccessControl{
         int96 allowedFlow,
         int96 maxAllowedFlow,
         uint256 deadline
-    ) internal {
+    ) internal returns(address) {
         require(cashflowFactory != address(0), "Cashflow Factory address is not set");
-        ITradeableCashflowWithAllowanceFactory(cashflowFactory).createNewCashflow(recipient, sender, jobId, allowedFlow, maxAllowedFlow, deadline);
+        return ITradeableCashflowWithAllowanceFactory(cashflowFactory).createNewCashflow(recipient, sender, jobId, allowedFlow, maxAllowedFlow, deadline);
     }
 
 
@@ -341,13 +342,15 @@ contract PaymentFactory is AccessControl{
      *      communicating with the job creator before submission
      * @dev Implement states and refusals
      * @param jobID The ID of a specific job
+     * @param assetCid Points to the ipfs cid of the final work, could be useful for a "mock" appstore
      **/
-    function submitWork(uint256 jobID)
+    function submitWork(uint256 jobID, string memory assetCid)
         public
         auth(finalApplicant[jobID])
         inState(State.Signed, jobID)
     {
         jobs[jobID].workSubmitted = true;
+        jobs[jobID].assetCid = assetCid;
     }
 
     /**
@@ -358,14 +361,18 @@ contract PaymentFactory is AccessControl{
      * @param result Dictates whether the work is accepted or rejected. True to accept, false to reject
      * @param jobID The ID of a specific job
      **/
-    function finalSign(bool result, uint256 jobID)
+    function finalSign(bool result, uint256 jobID, int96 allowedFlow, int96 maxAllowedFlow, uint deadline)
         public
         auth(jobs[jobID].creator)
     {
         require(jobs[jobID].workSubmitted == true);
         jobs[jobID].state = State.Closed;
         if (result) {
-            // Begin payment stream + events
+            //Just to test it, all this parameters should be available from earlier (e.g. during applicant proposal)
+           address newCashflow = _createNewCashflow(finalApplicant[jobID], msg.sender, jobID, allowedFlow, maxAllowedFlow, deadline);
+           address acceptedToken = ITradeableCashflowWithAllowanceFactory(cashflowFactory).getAcceptedToken(jobID);
+           //Transfer 1 DAIx from the buyer to the cashflow contract, the buyer need to approve the amount first 
+           ISuperToken(acceptedToken).transfer(newCashflow, 1000000000000000000);
         } else if (!result) {
             // Mediation? Receive stake back after mediation?
         }

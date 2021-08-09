@@ -14,4 +14,8 @@ interface ITradeableCashflowWithAllowanceFactory {
     function updateCashflowAllowance(uint256 jobId, int96 newAllowance) external;
 
     function getAllowedFlow(uint256 jobId) external view returns(int96);
+
+    //JobId is not needed for now but it could allow in future to have different super token options for differents job
+    function getAcceptedToken(uint256 jobId) external view returns(address);
+
 }

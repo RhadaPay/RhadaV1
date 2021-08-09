@@ -34,6 +34,10 @@ contract TradeableCashflowWithAllowanceFactory is ITradeableCashflowWithAllowanc
         _paymentFactory = paymentFactory;
     }
 
+    function getAcceptedToken(uint256) override public view returns(address){
+        return _acceptedToken;
+    }
+
     function updatePaymentFactory(address paymentFactory) public {
         require(hasRole(JOB_ADMIN, msg.sender), "Not authorized");
         _paymentFactory = paymentFactory;
