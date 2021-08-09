@@ -47,6 +47,7 @@ contract PaymentFactory is AccessControl{
 
     struct Job {
         address creator;
+        string descriptor;
         uint256 amount;
         uint256 refreshRate;
         uint8 percentage;
@@ -81,15 +82,30 @@ contract PaymentFactory is AccessControl{
         uint256 jobID,
         uint256 eventStreamId
     );
-
-    event EventStreamCreated(string descriptor, uint256 streamID);
-    event AmountChanged(uint256 amount, uint256 jobID);
-    event ApplicantApplied(address applicant, uint256 jobID);
-    event ApplicantChosen(address applicant, uint256 jobID);
-    event ApplicantSigned(address applicant, uint256 jobID);
-    event CreatorSigned(address creator, uint256 jobID);
-    event JobCompleted(uint256 jobID);
-    event FinalSign(address creator, address applicant, uint256 jobID);
+    event EventStreamCreated(
+        string descriptor, 
+        uint256 streamID);
+    event AmountChanged(
+        uint256 amount, 
+        uint256 jobID);
+    event ApplicantApplied(
+        address applicant, 
+        uint256 jobID);
+    event ApplicantChosen(
+        address applicant, 
+        uint256 jobID);
+    event ApplicantSigned(
+        address applicant, 
+        uint256 jobID);
+    event CreatorSigned(
+        address creator, 
+        uint256 jobID);
+    event JobCompleted(
+        uint256 jobID);
+    event FinalSign(
+        address creator, 
+        address applicant, 
+        uint256 jobID);
     event FinalResult(
         address creator,
         address applicant,
@@ -196,6 +212,7 @@ contract PaymentFactory is AccessControl{
      **/
     function createJob(
         uint256 _initAmount,
+        string memory _descriptor,
         uint256 _refreshRate,
         uint256 _eventStreamId,
         uint8 _percentage
@@ -207,6 +224,7 @@ contract PaymentFactory is AccessControl{
         jobs.push(
             Job({
                 creator: msg.sender,
+                descriptor: _descriptor,
                 amount: _initAmount,
                 percentage: _percentage,
                 refreshRate: _refreshRate,
@@ -296,6 +314,7 @@ contract PaymentFactory is AccessControl{
         auth(jobs[jobID].creator)
         inState(State.Open, jobID)
     {
+        // Require that applicant exists *****
         finalApplicant[jobID] = chosenApplicant;
         jobs[jobID].state = State.Signing;
         emit ApplicantChosen(chosenApplicant, jobID);
@@ -312,6 +331,9 @@ contract PaymentFactory is AccessControl{
         inState(State.Signing, jobID)
     {
         jobs[jobID].applicantSigned = true;
+        if(jobs[jobID].creatorSigned == true && jobs[jobID].applicantSigned == true) {
+            jobs[jobID].state = State.Signed;
+        }
         emit ApplicantSigned(msg.sender, jobID);
     }
 
@@ -327,10 +349,12 @@ contract PaymentFactory is AccessControl{
         inState(State.Signing, jobID)
     {
         uint256 val = msg.value;
-        require(jobs[jobID].amount >= val);
-        jobs[jobID].state = State.Signed;
-        jobs[jobID].amount = val;
+        require(jobs[jobID].amount <= val);
         jobs[jobID].creatorSigned = true;
+        jobs[jobID].amount = val;
+        if(jobs[jobID].creatorSigned == true && jobs[jobID].applicantSigned == true) {
+            jobs[jobID].state = State.Signed;
+        }
         emit CreatorSigned(msg.sender, jobID);
     }
 
