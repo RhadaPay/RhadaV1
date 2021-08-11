@@ -54,6 +54,7 @@ contract PaymentFactory is AccessControl{
         string assetCid;
         uint256 eventStreamId;
         uint256 eventsRecorded;
+        uint256 deadline;
         bool creatorSigned;
         bool applicantSigned;
         bool workSubmitted;
@@ -215,6 +216,7 @@ contract PaymentFactory is AccessControl{
         string memory _descriptor,
         uint256 _refreshRate,
         uint256 _eventStreamId,
+        uint256 _deadline,
         uint8 _percentage
     ) public {
         require(
@@ -230,6 +232,7 @@ contract PaymentFactory is AccessControl{
                 refreshRate: _refreshRate,
                 eventsRecorded: 0,
                 eventStreamId: _eventStreamId,
+                deadline: _deadline,
                 creatorSigned: false,
                 assetCid: "",
                 applicantSigned: false,
@@ -383,7 +386,7 @@ contract PaymentFactory is AccessControl{
      * @param result Dictates whether the work is accepted or rejected. True to accept, false to reject
      * @param jobID The ID of a specific job
      **/
-    function finalSign(bool result, uint256 jobID, int96 allowedFlow, int96 maxAllowedFlow, uint deadline)
+    function finalSign(bool result, uint256 jobID, int96 allowedFlow, int96 maxAllowedFlow)
         public
         auth(jobs[jobID].creator)
     {
@@ -391,7 +394,7 @@ contract PaymentFactory is AccessControl{
         jobs[jobID].state = State.Closed;
         if (result) {
             //Just to test it, all this parameters should be available from earlier (e.g. during applicant proposal)
-           address newCashflow = _createNewCashflow(finalApplicant[jobID], msg.sender, jobID, allowedFlow, maxAllowedFlow, deadline);
+           address newCashflow = _createNewCashflow(finalApplicant[jobID], msg.sender, jobID, allowedFlow, maxAllowedFlow, jobs[jobID].deadline);
            address acceptedToken = ITradeableCashflowWithAllowanceFactory(cashflowFactory).getAcceptedToken(jobID);
            //Transfer 1 DAIx from the buyer to the cashflow contract, the buyer need to approve the amount first 
            ISuperToken(acceptedToken).transfer(newCashflow, 1000000000000000000);
