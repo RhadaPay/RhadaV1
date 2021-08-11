@@ -17,7 +17,7 @@ const config: HardhatUserConfig =  {
     mumbai: {
       url: process.env.MUMBAI_RPC,
       chainId: 80001,
-      accounts: [ process.env.PRIVATE_KEY as string]
+      accounts: [ process.env.PRIVATE_KEY as string, process.env.PRIVATE_KEY2 as string ]
     }
   },
   solidity: {
@@ -40,6 +40,8 @@ const config: HardhatUserConfig =  {
   },
   namedAccounts: {
     deployer: 0,
+    buyer: 0,
+    seller: 1,
     host: {
       "mumbai": '0xEB796bdb90fFA0f28255275e16936D25d3418603'
     },
@@ -48,6 +50,9 @@ const config: HardhatUserConfig =  {
     },
     acceptedToken: {
       "mumbai": '0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f'
+    },
+    oracle: {
+      "mumbai": '0xD71352a10Ca84d3DF6602c3943F3825e13F655D0'
     }
   },
 };
