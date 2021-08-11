@@ -71,12 +71,12 @@ contract TradeableCashflowWithAllowanceFactory is ITradeableCashflowWithAllowanc
         uint256 deadline
     ) isPaymentFactory public override returns(address){
         require(cashflowsRecipient[jobId] == address(0), "JobId already used");
-        TradeableCashflowWithAllowance newFlow = new TradeableCashflowWithAllowance(recipient, allowedFlow, maxAllowedFlow, deadline, msg.sender, _host, _cfa, _acceptedToken);
+        TradeableCashflowWithAllowance newFlow = new TradeableCashflowWithAllowance(recipient, allowedFlow, maxAllowedFlow, deadline, sender, _host, _cfa, _acceptedToken);
         address flowAddress = address(newFlow);
         cashflowsRecipient[jobId] = flowAddress;
         cashflowsSender[jobId] = sender;
         //TODO: transfer money from msg.sender to address(newFlow)
-        emit NewCashFlow(jobId, flowAddress, msg.sender);
+        emit NewCashFlow(jobId, flowAddress, sender);
         return flowAddress;
     }
  

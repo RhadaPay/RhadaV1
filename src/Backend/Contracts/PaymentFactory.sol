@@ -395,9 +395,6 @@ contract PaymentFactory is AccessControl{
         if (result) {
             //Just to test it, all this parameters should be available from earlier (e.g. during applicant proposal)
            address newCashflow = _createNewCashflow(finalApplicant[jobID], msg.sender, jobID, allowedFlow, maxAllowedFlow, jobs[jobID].deadline);
-           address acceptedToken = ITradeableCashflowWithAllowanceFactory(cashflowFactory).getAcceptedToken(jobID);
-           //Transfer 1 DAIx from the buyer to the cashflow contract, the buyer need to approve the amount first 
-           ISuperToken(acceptedToken).transfer(newCashflow, 1000000000000000000);
         } else if (!result) {
             // Mediation? Receive stake back after mediation?
         }

@@ -44,8 +44,8 @@
       ]
     },
     "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/PaymentFactory.sol": {
-      "lastModificationDate": 1628666969952,
-      "contentHash": "f007020ff8c0bba9a9f9a0a9da4ff990",
+      "lastModificationDate": 1628696653042,
+      "contentHash": "b6341abdfd62823ae929773a590dab33",
       "sourceName": "Contracts/PaymentFactory.sol",
       "solcConfig": {
         "version": "0.7.6",
@@ -746,8 +746,8 @@
       ]
     },
     "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/Cashflow/TradeableCashflowWithAllowanceFactory.sol": {
-      "lastModificationDate": 1628480528365,
-      "contentHash": "98e4b2f58c06fc55bdaa172ab5f4be31",
+      "lastModificationDate": 1628699731212,
+      "contentHash": "52f20bb194d4bece08b8829f542d8512",
       "sourceName": "Contracts/Cashflow/TradeableCashflowWithAllowanceFactory.sol",
       "solcConfig": {
         "version": "0.7.6",
