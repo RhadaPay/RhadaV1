@@ -21,7 +21,7 @@ import {ISuperToken} from "@superfluid-finance/ethereum-contracts/contracts/inte
  * Complete all events
  **/
 
-contract PaymentFactory is AccessControl{
+contract PaymentFactory is AccessControl {
     using SafeMath for uint256;
     using Int96SafeMath for int96;
 
@@ -81,22 +81,39 @@ contract PaymentFactory is AccessControl{
         uint256 jobID,
         uint256 eventStreamId
     );
-
-    event EventStreamCreated(string descriptor, uint256 streamID);
-    event AmountChanged(uint256 amount, uint256 jobID);
-    event ApplicantApplied(address applicant, uint256 jobID);
-    event ApplicantChosen(address applicant, uint256 jobID);
-    event ApplicantSigned(address applicant, uint256 jobID);
-    event CreatorSigned(address creator, uint256 jobID);
-    event JobCompleted(uint256 jobID);
-    event FinalSign(address creator, address applicant, uint256 jobID);
+    event EventStreamCreated(
+        string descriptor, 
+        uint256 streamID);
+    event AmountChanged(
+        uint256 amount, 
+        uint256 jobID);
+    event ApplicantApplied(
+        address applicant, 
+        uint256 jobID);
+    event ApplicantChosen(
+        address applicant, 
+        uint256 jobID);
+    event ApplicantSigned(
+        address applicant, 
+        uint256 jobID);
+    event CreatorSigned(
+        address creator, 
+        uint256 jobID);
+    event JobCompleted(
+        uint256 jobID);
+    event FinalSign(
+        address creator, 
+        address applicant, 
+        uint256 jobID);
     event FinalResult(
         address creator,
         address applicant,
         uint256 jobID,
         bool result
     );
-    event UpdateNumberOfEvents(uint256 newTotal, uint256 jobID);
+    event UpdateNumberOfEvents(
+        uint256 newTotal, 
+        uint256 jobID);
 
     constructor(address _cashflowFactory)
     {
@@ -108,7 +125,6 @@ contract PaymentFactory is AccessControl{
     function updateCashflowFactoryAddress(address _cashflowFactory) isJobAdmin public {
         cashflowFactory = _cashflowFactory;
     }
-
 
     // TradeableCashflowWithAllowanceFactory integration
     function _createNewCashflow(
@@ -130,7 +146,10 @@ contract PaymentFactory is AccessControl{
      * @param jobId The ID of a specific job
      * @param eventsRecorded Number of events recorded to update
      **/
-    function increaseCashflowAllowance(uint256 jobId, uint eventsRecorded) isJobOracle public{
+    function increaseCashflowAllowance(
+        uint256 jobId, 
+        uint eventsRecorded
+    ) isJobOracle public {
         require(cashflowFactory != address(0), "Cashflow Factory address is not set");
         jobs[jobId].eventsRecorded = eventsRecorded;
 
