@@ -85,35 +85,46 @@ contract PaymentFactory is AccessControl{
     );
     event EventStreamCreated(
         string descriptor, 
-        uint256 streamID);
+        uint256 streamID
+    );
     event AmountChanged(
         uint256 amount, 
-        uint256 jobID);
+        uint256 jobID
+    );
     event ApplicantApplied(
         address applicant, 
-        uint256 jobID);
+        uint256 jobID
+    );
     event ApplicantChosen(
         address applicant, 
-        uint256 jobID);
+        uint256 jobID
+    );
     event ApplicantSigned(
         address applicant, 
-        uint256 jobID);
+        uint256 jobID
+    );
     event CreatorSigned(
         address creator, 
-        uint256 jobID);
+        uint256 jobID
+    );
     event JobCompleted(
-        uint256 jobID);
+        uint256 jobID
+    );
     event FinalSign(
         address creator, 
         address applicant, 
-        uint256 jobID);
+        uint256 jobID
+    );
     event FinalResult(
         address creator,
         address applicant,
         uint256 jobID,
         bool result
     );
-    event UpdateNumberOfEvents(uint256 newTotal, uint256 jobID);
+    event UpdateNumberOfEvents(
+        uint256 newTotal, 
+        uint256 jobID
+    );
 
     constructor(address _cashflowFactory)
     {
@@ -122,7 +133,9 @@ contract PaymentFactory is AccessControl{
         cashflowFactory = _cashflowFactory;
     }
 
-    function updateCashflowFactoryAddress(address _cashflowFactory) isJobAdmin public {
+    function updateCashflowFactoryAddress(
+        address _cashflowFactory
+    ) isJobAdmin public {
         cashflowFactory = _cashflowFactory;
     }
 
@@ -147,7 +160,10 @@ contract PaymentFactory is AccessControl{
      * @param jobId The ID of a specific job
      * @param eventsRecorded Number of events recorded to update
      **/
-    function increaseCashflowAllowance(uint256 jobId, uint eventsRecorded) isJobOracle public{
+    function increaseCashflowAllowance(
+        uint256 jobId, 
+        uint eventsRecorded
+    ) isJobOracle public{
         require(cashflowFactory != address(0), "Cashflow Factory address is not set");
         jobs[jobId].eventsRecorded = eventsRecorded;
 
@@ -256,7 +272,9 @@ contract PaymentFactory is AccessControl{
      * @dev Check
      * @param _descriptor A generic description of the event stream
      **/
-    function createEventStream(string memory _descriptor) public {
+    function createEventStream(
+        string memory _descriptor
+    ) public {
         EventStream memory es;
         es.descriptor = _descriptor;
         eventStreams.push(es);
@@ -270,10 +288,10 @@ contract PaymentFactory is AccessControl{
      * @param newAmount The new down payment
      * @param jobID The ID of a specific job
      **/
-    function configureAmount(uint256 newAmount, uint256 jobID)
-        public
-        auth(jobs[jobID].creator)
-        inState(State.Open, jobID)
+    function configureAmount(
+        uint256 newAmount,
+        uint256 jobID
+    ) public auth(jobs[jobID].creator) inState(State.Open, jobID)
     {
         require(newAmount > 0);
         jobs[jobID].amount = newAmount;
@@ -286,10 +304,10 @@ contract PaymentFactory is AccessControl{
      * @param newRefreshRate The new number of events before a payment refresh is triggered
      * @param jobID The ID of a specific job
      **/
-    function changeRefreshRate(uint8 newRefreshRate, uint256 jobID)
-        public
-        auth(jobs[jobID].creator)
-        inState(State.Open, jobID)
+    function changeRefreshRate(
+        uint8 newRefreshRate, 
+        uint256 jobID
+    ) public auth(jobs[jobID].creator) inState(State.Open, jobID)
     {
         require(newRefreshRate > 0, "Refresh rate needs to be greater than 0.");
         jobs[jobID].refreshRate = newRefreshRate;
@@ -300,7 +318,9 @@ contract PaymentFactory is AccessControl{
      * @dev Can flesh out a little bit more, but this is probably ok for now
      * @param jobID The ID of a specific job
      **/
-    function applyForJob(uint256 jobID) public inState(State.Open, jobID) {
+    function applyForJob(
+        uint256 jobID
+    ) public inState(State.Open, jobID) {
         jobToApplicants[jobID].push(msg.sender);
         emit ApplicantApplied(msg.sender, jobID);
     }
@@ -312,11 +332,10 @@ contract PaymentFactory is AccessControl{
      * @param chosenApplicant The applicant who is accepted
      * @param jobID The ID of a specific job
      **/
-    function chooseApplicant(address chosenApplicant, uint256 jobID)
-        public
-        auth(jobs[jobID].creator)
-        inState(State.Open, jobID)
-    {
+    function chooseApplicant(
+        address chosenApplicant,
+        uint256 jobID
+    ) public auth(jobs[jobID].creator) inState(State.Open, jobID) {
         // Require that applicant exists *****
         finalApplicant[jobID] = chosenApplicant;
         jobs[jobID].state = State.Signing;
@@ -328,11 +347,9 @@ contract PaymentFactory is AccessControl{
      * @dev Add init stake to prevent bailing? May be a deterrent...
      * @param jobID The ID of a specific job
      **/
-    function initApplicantSign(uint256 jobID)
-        public
-        auth(finalApplicant[jobID])
-        inState(State.Signing, jobID)
-    {
+    function initApplicantSign(
+        uint256 jobID
+    ) public auth(finalApplicant[jobID]) inState(State.Signing, jobID) {
         jobs[jobID].applicantSigned = true;
         if(jobs[jobID].creatorSigned == true && jobs[jobID].applicantSigned == true) {
             jobs[jobID].state = State.Signed;
@@ -345,12 +362,9 @@ contract PaymentFactory is AccessControl{
      * @dev Check the states
      * @param jobID The ID of a specific job
      **/
-    function initCreatorSign(uint256 jobID)
-        public
-        payable
-        auth(jobs[jobID].creator)
-        inState(State.Signing, jobID)
-    {
+    function initCreatorSign(
+        uint256 jobID
+    ) public payable auth(jobs[jobID].creator) inState(State.Signing, jobID) {
         uint256 val = msg.value;
         require(jobs[jobID].amount <= val);
         jobs[jobID].creatorSigned = true;
@@ -369,11 +383,10 @@ contract PaymentFactory is AccessControl{
      * @param jobID The ID of a specific job
      * @param assetCid Points to the ipfs cid of the final work, could be useful for a "mock" appstore
      **/
-    function submitWork(uint256 jobID, string memory assetCid)
-        public
-        auth(finalApplicant[jobID])
-        inState(State.Signed, jobID)
-    {
+    function submitWork(
+        uint256 jobID, 
+        string memory assetCid
+    ) public auth(finalApplicant[jobID]) inState(State.Signed, jobID) {
         jobs[jobID].workSubmitted = true;
         jobs[jobID].assetCid = assetCid;
     }
@@ -386,10 +399,12 @@ contract PaymentFactory is AccessControl{
      * @param result Dictates whether the work is accepted or rejected. True to accept, false to reject
      * @param jobID The ID of a specific job
      **/
-    function finalSign(bool result, uint256 jobID, int96 allowedFlow, int96 maxAllowedFlow)
-        public
-        auth(jobs[jobID].creator)
-    {
+    function finalSign(
+        bool result, 
+        uint256 jobID, 
+        int96 allowedFlow, 
+        int96 maxAllowedFlow
+    ) public auth(jobs[jobID].creator) {
         require(jobs[jobID].workSubmitted == true);
         jobs[jobID].state = State.Closed;
         if (result) {
