@@ -16,7 +16,10 @@ contract TradeableCashflowWithAllowanceFactory is ITradeableCashflowWithAllowanc
     bytes32 public constant JOB_ADMIN = keccak256("JOB_ADMIN");
 
     event NewCashFlow(uint jobId,  address recipient, address sender);
-    mapping(uint => address) public cashflowsRecipient;  
+
+    mapping(uint => address) public cashflowsRecipient;
+    mapping(uint => int96) public maxAllowedFlows;
+
     mapping(uint => address) public cashflowsSender;  
 
     constructor(
@@ -75,6 +78,7 @@ contract TradeableCashflowWithAllowanceFactory is ITradeableCashflowWithAllowanc
         address flowAddress = address(newFlow);
         cashflowsRecipient[jobId] = flowAddress;
         cashflowsSender[jobId] = sender;
+        maxAllowedFlows[jobId] = maxAllowedFlow;
         //TODO: transfer money from msg.sender to address(newFlow)
         emit NewCashFlow(jobId, flowAddress, sender);
         return flowAddress;

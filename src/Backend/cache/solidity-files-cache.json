@@ -746,8 +746,8 @@
       ]
     },
     "/home/franz/hackaton/RhadaV1/src/Backend/Contracts/Cashflow/TradeableCashflowWithAllowanceFactory.sol": {
-      "lastModificationDate": 1628699731212,
-      "contentHash": "52f20bb194d4bece08b8829f542d8512",
+      "lastModificationDate": 1628781938760,
+      "contentHash": "7de9a33de39996e4bca2a27f7e024bda",
       "sourceName": "Contracts/Cashflow/TradeableCashflowWithAllowanceFactory.sol",
       "solcConfig": {
         "version": "0.7.6",
