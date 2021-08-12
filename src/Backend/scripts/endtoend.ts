@@ -88,7 +88,7 @@ async function main() {
   console.log("daix approved: ", tx.transactionHash);
   
   //8. finalSign
-  finalSign(jobID, "289351851851852"/* 750 per month */, "578703703703704"/* 1500 per month */)
+  finalSign(jobID, "  "/* 750 per month */, "578703703703704"/* 1500 per month */)
 }
 
 main()
