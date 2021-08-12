@@ -163,7 +163,7 @@ contract PaymentFactory is AccessControl{
     function increaseCashflowAllowance(
         uint256 jobId, 
         uint eventsRecorded
-    ) isJobOracle public{
+    ) isJobOracle public {
         require(cashflowFactory != address(0), "Cashflow Factory address is not set");
         jobs[jobId].eventsRecorded = eventsRecorded;
 
@@ -291,8 +291,7 @@ contract PaymentFactory is AccessControl{
     function configureAmount(
         uint256 newAmount,
         uint256 jobID
-    ) public auth(jobs[jobID].creator) inState(State.Open, jobID)
-    {
+    ) public auth(jobs[jobID].creator) inState(State.Open, jobID) {
         require(newAmount > 0);
         jobs[jobID].amount = newAmount;
         // Emit events
@@ -307,8 +306,7 @@ contract PaymentFactory is AccessControl{
     function changeRefreshRate(
         uint8 newRefreshRate, 
         uint256 jobID
-    ) public auth(jobs[jobID].creator) inState(State.Open, jobID)
-    {
+    ) public auth(jobs[jobID].creator) inState(State.Open, jobID) {
         require(newRefreshRate > 0, "Refresh rate needs to be greater than 0.");
         jobs[jobID].refreshRate = newRefreshRate;
     }
