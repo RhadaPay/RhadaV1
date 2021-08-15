@@ -1,0 +1,6 @@
+[submodule "EventTracker"]
+	path = EventTracker
+	url = https://github.com/RhadaPay/EventTracker.git
+[submodule "rhada-frontend"]
+	path = rhada-frontend
+	url = https://github.com/RhadaPay/rhada-frontend.git
